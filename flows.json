@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "id": "06c72d44e5729b2a",
+        "type": "tab",
+        "label": "worker tracker",
+        "disabled": false,
+        "info": "",
+        "env": []
+    }
+]
