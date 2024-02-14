@@ -48,6 +48,7 @@
     {
         "id": "60b254c433dfc6f4",
         "type": "amqp-server",
+        "z": "06c72d44e5729b2a",
         "host": "localhost",
         "port": "5630",
         "vhost": "",
@@ -60,8 +61,8 @@
         "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
         "prefetch": true,
         "prefetchvalue": "1",
-        "prefetchack": false,
-        "prefetchvalueack": "10"
+        "prefetchack": true,
+        "prefetchvalueack": "180000"
     },
     {
         "id": "e8c0683cc5f8df67",
