@@ -4,7 +4,424 @@
         "type": "tab",
         "label": "worker tracker",
         "disabled": false,
-        "info": "",
+        "info": "// nrlint function-eslint:off\n",
         "env": []
+    },
+    {
+        "id": "9f1e98d4426d35e3",
+        "type": "group",
+        "z": "06c72d44e5729b2a",
+        "name": "wroker tracker transaction",
+        "style": {
+            "label": true,
+            "label-position": "n",
+            "stroke": "none",
+            "color": "#ff0000",
+            "fill": "#e3f3d3",
+            "fill-opacity": "0.4"
+        },
+        "nodes": [
+            "e8c0683cc5f8df67",
+            "d18b39342c8a59d3",
+            "8f24af074f1a443c",
+            "55ed1342d1fd4d9c",
+            "61a97b32b17dbf53",
+            "b387dc3b8e3ba31b",
+            "8ab2f8087937a815",
+            "b765932bf69d2d0f",
+            "2da97027bd0d7c7a",
+            "5c21ea28c38aab09",
+            "4b898ccf9f8a0eaa",
+            "996035da1afdd16a",
+            "909f0bae520fb673",
+            "d3ea6c903a99d251",
+            "2eba0d1cd9992f8b",
+            "d398667e86b896fc",
+            "d91e33e6c6d8d28c",
+            "73952f098b8ed22c"
+        ],
+        "x": 14,
+        "y": 19,
+        "w": 592,
+        "h": 542
+    },
+    {
+        "id": "60b254c433dfc6f4",
+        "type": "amqp-server",
+        "host": "localhost",
+        "port": "5630",
+        "vhost": "",
+        "keepalive": "30",
+        "usetls": false,
+        "verifyservercert": true,
+        "useca": false,
+        "ca": "",
+        "usetopology": false,
+        "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
+        "prefetch": false,
+        "prefetchvalue": "1",
+        "prefetchack": false,
+        "prefetchvalueack": "10"
+    },
+    {
+        "id": "e8c0683cc5f8df67",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "send to worker",
+        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, series } = msg.payload;\n    let [ident, tracking] = series;\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        let { area, tracking } = result.data;\n        if (Array.isArray(tracking) && tracking.length > 0) {\n            node.send({\n                payload: { date, ident, area, tracking }\n            });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        msg.error = err;\n        node.send(msg);\n    })\n\n    // Send a message to the worker thread\n    worker.postMessage({\n        func: 'checkLocationsInMultiPloygon',\n        payload: {\n            locations: tracking,\n            multiPolygon: msg.geoDivision\n        }\n    });\n} catch (err) {\n    node.warn(err);\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 140,
+        "wires": [
+            [
+                "55ed1342d1fd4d9c"
+            ]
+        ],
+        "icon": "font-awesome/fa-qrcode"
+    },
+    {
+        "id": "d18b39342c8a59d3",
+        "type": "amqp in",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.filterby.division",
+        "server": "60b254c433dfc6f4",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "d398667e86b896fc"
+            ]
+        ]
+    },
+    {
+        "id": "8f24af074f1a443c",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "get SMSE divisions geojson",
+        "func": "const couchdb = global.get('couchdb');\n\ncouchdb.view('smart-geojson', 'division', 'geo-by-estate', {\n    key: ['PSM 2', \"SMSE\"]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(div => {\n        msg.geoDivision = div;\n        node.send(msg);\n    });\n})\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "e8c0683cc5f8df67"
+            ]
+        ],
+        "icon": "font-awesome/fa-code-fork"
+    },
+    {
+        "id": "55ed1342d1fd4d9c",
+        "type": "amqp out",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.filterby.division",
+        "server": "60b254c433dfc6f4",
+        "x": 470,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "61a97b32b17dbf53",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "get block geojson",
+        "func": "const couchdb = global.get('couchdb');\nlet { area } = msg.payload;\nlet { psm, estate, division } = area;\n\ncouchdb.view('smart-geojson', 'block', 'geo-by-division', {\n    key: [psm, estate, division]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(block => {\n        msg.geoBlock = block;\n        node.send(msg);\n    });\n})\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 240,
+        "wires": [
+            [
+                "b387dc3b8e3ba31b"
+            ]
+        ]
+    },
+    {
+        "id": "b387dc3b8e3ba31b",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "send to worker",
+        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking } = msg.payload;\n\n    // Send a message to the worker thread\n    worker.postMessage({\n        func: 'checkLocationsInPloygon',\n        payload: {\n            locations: tracking,\n            geojson: msg.geoBlock\n        }\n    });\n    \n    worker.on('message', (result) => {\n        worker.terminate();\n        let { area, tracking } = result.data;\n        if (Array.isArray(tracking) && tracking.length > 0) {\n            node.send({\n                payload: {\n                    date,\n                    ident,\n                    area,\n                    tracking\n                }\n            });\n        }\n    });\n\n    worker.on('error', (err) => {\n        worker.terminate();\n        msg.error = err;\n        node.send(msg);\n    });\n} catch (err) {\n    node.warn(err);\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 280,
+        "wires": [
+            [
+                "8ab2f8087937a815"
+            ]
+        ],
+        "icon": "font-awesome/fa-qrcode"
+    },
+    {
+        "id": "8ab2f8087937a815",
+        "type": "amqp out",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.filterby.block",
+        "server": "60b254c433dfc6f4",
+        "x": 470,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "b765932bf69d2d0f",
+        "type": "amqp in",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.filterby.block",
+        "server": "60b254c433dfc6f4",
+        "x": 170,
+        "y": 340,
+        "wires": [
+            [
+                "2eba0d1cd9992f8b"
+            ]
+        ]
+    },
+    {
+        "id": "2da97027bd0d7c7a",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "get tree geojson",
+        "func": "const couchdb = global.get('couchdb');\nlet { date, ident, area } = msg.payload;\nlet { psm, estate, division, block } = area;\n\ncouchdb.view('smart-geojson', 'tree', 'geo-by-block', {\n    key: [psm, estate, division, block]\n}).then(res => {\n    let geoTree = res.data.rows?.map(x => x.value);\n    couchdb.view('transactions', 'filter', 'by-harvester-date', {\n        key: [ident[0], date]\n    }).then(res => {\n        let transIDs = res.data.rows?.map(x => x.value);\n        msg.geoTree = geoTree.filter(x => !transIDs.includes(x.properties['_id']));\n        node.send(msg);\n    });\n});\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 380,
+        "wires": [
+            [
+                "5c21ea28c38aab09"
+            ]
+        ]
+    },
+    {
+        "id": "5c21ea28c38aab09",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "send to worker",
+        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { ident, tracking } = msg.payload;\n    let geoTree = msg.geoTree;\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        if (result.data && Array.isArray(result.data) && result.data.length > 0) {\n            node.send({\n                payload: {\n                    ident,\n                    geofencing: result.data\n                }\n            });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        msg.error = err;\n        node.send(msg);\n    })\n\n    // Send a message to the worker thread\n    if (Array.isArray(geoTree) && geoTree.length > 0) {\n        worker.postMessage({\n            func: 'geofencing',\n            payload: {\n                locations: tracking,\n                geojson: geoTree\n            }\n        });\n    }\n    return null;\n} catch (err) {\n    node.warn(err);\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 420,
+        "wires": [
+            [
+                "4b898ccf9f8a0eaa"
+            ]
+        ],
+        "icon": "font-awesome/fa-qrcode"
+    },
+    {
+        "id": "4b898ccf9f8a0eaa",
+        "type": "amqp out",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.transaction",
+        "server": "60b254c433dfc6f4",
+        "x": 440,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "996035da1afdd16a",
+        "type": "amqp in",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.transaction",
+        "server": "60b254c433dfc6f4",
+        "x": 200,
+        "y": 480,
+        "wires": [
+            [
+                "909f0bae520fb673"
+            ]
+        ]
+    },
+    {
+        "id": "909f0bae520fb673",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "create transactions",
+        "func": "try {\n    const couchdb = global.get('couchdb');\n\n    let { ident, geofencing } = msg.payload;\n    let [nik, device, imei] = ident;\n    let rs = [];\n    geofencing.forEach(geof => {\n        let { tree, loc } = geof;\n        let { _id, psm, estate, division, block } = tree.properties;\n        let transaction = rs.find(x => x.treeID == tree.properties._id);\n        let isHarvested = Number(loc[2]) == 1;\n        if (!transaction) {\n            rs.push({\n                treeID: _id,\n                psm: psm,\n                estate: estate,\n                division: division,\n                block: block,\n                harvester: nik,\n                harvested: (isHarvested) ? Number(loc[2]) : 0,\n                lastHarvested: (isHarvested) ? new Date(loc[0]) : null,\n                visited: 1,\n                lastVisited: new Date(loc[0]),\n                meta: {\n                    harvestedPoints: (isHarvested) ? [loc] : [],\n                    visitedPoints: [loc]\n                },\n                createdBy: \"system\",\n                createdDate: new Date(),\n                modifiedBy: \"system\",\n                modifiedDate: new Date(),\n            });\n        } else {\n            if (isHarvested) {\n                transaction.harvested++;\n                transaction.lastHarvested = new Date(loc[0]);\n                transaction.meta.harvestedPoints.push(loc);\n            }\n            transaction.visited++;\n            transaction.meta.visitedPoints.push(loc);\n        }\n    });\n\n    rs.forEach(data => {\n        data.meta.harvestedPoints = JSON.stringify(data.meta.harvestedPoints);\n        data.meta.visitedPoints = JSON.stringify(data.meta.visitedPoints);\n    });\n\n    couchdb.bulkInsert('transactions', rs).then(res => {\n        node.send({\n            payload: res.data\n        });\n    }, (err) => {\n        node.send({\n            error: err\n        });\n    });\n} catch (err) {\n    node.warn(err);\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 520,
+        "wires": [
+            [
+                "d91e33e6c6d8d28c"
+            ]
+        ]
+    },
+    {
+        "id": "d3ea6c903a99d251",
+        "type": "delay",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "40",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 440,
+        "y": 60,
+        "wires": [
+            [
+                "8f24af074f1a443c"
+            ]
+        ]
+    },
+    {
+        "id": "2eba0d1cd9992f8b",
+        "type": "delay",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 430,
+        "y": 340,
+        "wires": [
+            [
+                "2da97027bd0d7c7a"
+            ]
+        ]
+    },
+    {
+        "id": "d398667e86b896fc",
+        "type": "delay",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "20",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 440,
+        "y": 200,
+        "wires": [
+            [
+                "61a97b32b17dbf53"
+            ]
+        ]
+    },
+    {
+        "id": "d91e33e6c6d8d28c",
+        "type": "debug",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "debug 222",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "73952f098b8ed22c",
+        "type": "amqp in",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.perdevice",
+        "server": "60b254c433dfc6f4",
+        "x": 180,
+        "y": 60,
+        "wires": [
+            [
+                "d3ea6c903a99d251"
+            ]
+        ]
     }
 ]
