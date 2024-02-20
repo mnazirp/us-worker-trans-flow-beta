@@ -2,7 +2,15 @@
     {
         "id": "06c72d44e5729b2a",
         "type": "tab",
-        "label": "worker tracker",
+        "label": "wt: geofencing",
+        "disabled": false,
+        "info": "// nrlint function-eslint:off\n",
+        "env": []
+    },
+    {
+        "id": "9ba7388927fccc31",
+        "type": "tab",
+        "label": "wt: series",
         "disabled": false,
         "info": "// nrlint function-eslint:off\n",
         "env": []
@@ -34,8 +42,7 @@
             "4b898ccf9f8a0eaa",
             "996035da1afdd16a",
             "909f0bae520fb673",
-            "73952f098b8ed22c",
-            "48808eaf50437b94"
+            "73952f098b8ed22c"
         ],
         "x": 14,
         "y": 19,
@@ -100,7 +107,26 @@
         "prefetchvalueack": "30000"
     },
     {
-        "id": "624985a905819743",
+        "id": "e907ba5364e5896f",
+        "type": "amqp-server",
+        "z": "9ba7388927fccc31",
+        "host": "localhost",
+        "port": "5630",
+        "vhost": "",
+        "keepalive": "30",
+        "usetls": false,
+        "verifyservercert": true,
+        "useca": false,
+        "ca": "",
+        "usetopology": false,
+        "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
+        "prefetch": true,
+        "prefetchvalue": "1",
+        "prefetchack": true,
+        "prefetchvalueack": "5000"
+    },
+    {
+        "id": "70620c4aa929b5d8",
         "type": "amqp-server",
         "host": "localhost",
         "port": "5630",
@@ -116,6 +142,25 @@
         "prefetchvalue": "1",
         "prefetchack": false,
         "prefetchvalueack": "10"
+    },
+    {
+        "id": "56e870f2a20cabb0",
+        "type": "amqp-server",
+        "z": "9ba7388927fccc31",
+        "host": "localhost",
+        "port": "5630",
+        "vhost": "",
+        "keepalive": "30",
+        "usetls": false,
+        "verifyservercert": true,
+        "useca": false,
+        "ca": "",
+        "usetopology": false,
+        "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
+        "prefetch": true,
+        "prefetchvalue": "1",
+        "prefetchack": true,
+        "prefetchvalueack": "17000"
     },
     {
         "id": "e8c0683cc5f8df67",
@@ -188,7 +233,7 @@
         "routingkey": "",
         "iotype": "4",
         "ioname": "wt.tracking.filterby.division",
-        "server": "624985a905819743",
+        "server": "70620c4aa929b5d8",
         "x": 470,
         "y": 140,
         "wires": []
@@ -245,7 +290,7 @@
         "routingkey": "",
         "iotype": "4",
         "ioname": "wt.tracking.filterby.block",
-        "server": "624985a905819743",
+        "server": "70620c4aa929b5d8",
         "x": 470,
         "y": 280,
         "wires": []
@@ -320,7 +365,7 @@
         "routingkey": "",
         "iotype": "4",
         "ioname": "wt.transaction",
-        "server": "624985a905819743",
+        "server": "70620c4aa929b5d8",
         "x": 440,
         "y": 420,
         "wires": []
@@ -334,7 +379,7 @@
         "topic": "",
         "iotype": "4",
         "ioname": "wt.transaction",
-        "server": "624985a905819743",
+        "server": "70620c4aa929b5d8",
         "x": 200,
         "y": 480,
         "wires": [
@@ -359,9 +404,7 @@
         "x": 190,
         "y": 520,
         "wires": [
-            [
-                "48808eaf50437b94"
-            ]
+            []
         ]
     },
     {
@@ -383,21 +426,111 @@
         ]
     },
     {
-        "id": "48808eaf50437b94",
-        "type": "debug",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "debug 5",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 420,
-        "y": 520,
+        "id": "7caf168b939b9028",
+        "type": "amqp in",
+        "z": "9ba7388927fccc31",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.csv.import",
+        "server": "e907ba5364e5896f",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "bb6860a59623cd4b"
+            ]
+        ]
+    },
+    {
+        "id": "bb6860a59623cd4b",
+        "type": "function",
+        "z": "9ba7388927fccc31",
+        "name": "chunk data",
+        "func": "// let payload = msg.payload;\n// msg.ori = payload;\n// msg.payload = payload;\n\n// const chunkSize = 10000;\n\n// if (payload.length > chunkSize) {\n//   for (let i = 0; i < payload.length; i += chunkSize) {\n//     const chunk = payload.slice(i, i + chunkSize);\n//     node.send({\n//       payload: chunk\n//     });\n//   }\n// } else {\n//   node.send({\n//     payload\n//   });\n// }\n// return null;\n\nlet payload = msg.payload;\n\nconst chunkSize = 1000;\nconst delayBetweenChunks = 1000;\n\nfunction processArrayWithDelay(startIndex) {\n  const endIndex = Math.min(startIndex + chunkSize, payload.length);\n  const chunk = payload.slice(startIndex, endIndex);\n\n  node.send({\n    payload: chunk\n  });\n\n  if (endIndex < payload.length) {\n    setTimeout(() => {\n      processArrayWithDelay(endIndex);\n    }, delayBetweenChunks);\n  }\n}\n\n// Start processing the array with a delay\nprocessArrayWithDelay(0);\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 60,
+        "wires": [
+            [
+                "bafc0bcaf316df35"
+            ]
+        ],
+        "icon": "node-red/status.svg"
+    },
+    {
+        "id": "f449ebb8cc8d7088",
+        "type": "function",
+        "z": "9ba7388927fccc31",
+        "name": "build create & add commands",
+        "func": "const redisTS = global.get('redisTS');\n\nredisTS.commands([['keys', 'wt:*']]).then(rs => {\n    let wtKeys = rs.data[0];\n    let payload = msg.payload;\n    let suffix = ['deviceDatetime', 'latitude', 'longitude', 'altitude', 'speed', 'event', 'battery'];\n    let addCommands = [];\n    let createPayload = [];\n\n    for (const rec of payload) {\n        let { deviceID, deviceDatetime, latitude, longitude, altitude, event, speed, battery } = rec;\n        if (deviceDatetime && deviceDatetime != null && deviceDatetime != \"\") {\n            suffix.forEach(suf => {\n                if (!wtKeys.includes(`wt:${deviceID}:${suf}`) && createPayload.find(x => x.key == `wt:${deviceID}:${suf}`) == undefined) {\n                    createPayload.push({\n                        key: `wt:${deviceID}:${suf}`,\n                        retention: 0,\n                        duplicatePolicy: (suf != 'event') ? 'LAST' : 'SUM',\n                        labels: ['type', 'worker-tracker', 'deviceID', deviceID, 'topic', suf],\n                        encoding: 'UNCOMPRESSED'\n                    });\n                }\n            })\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:deviceDatetime`,\n                new Date(deviceDatetime).getTime().toString(),\n                new Date(deviceDatetime).getTime().toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:latitude`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(latitude).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:longitude`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(longitude).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:altitude`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(altitude).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:speed`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(speed).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:event`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(event).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:battery`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(battery).toString()\n            ]);\n        }\n    }\n\n    redisTS.tsCreate(createPayload).then(createRS => {\n        msg.payload = addCommands;\n        node.send(msg);\n    })\n});\n\nreturn null;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "e057ad1e131c55ee"
+            ]
+        ],
+        "icon": "font-awesome/fa-code-fork"
+    },
+    {
+        "id": "e057ad1e131c55ee",
+        "type": "function",
+        "z": "9ba7388927fccc31",
+        "name": "ts.add data series",
+        "func": "const w = global.get('worker');\nconst worker = new w.Worker('./workers/w-redis-ts.js', { workerData: 'send data csv to timeseries' });\n\nworker.on('message', (result) => {\n    worker.terminate();\n    node.send({ payload: result });\n});\nworker.on('error', (err) => {\n    worker.terminate();\n    msg.error = err;\n    node.send(msg);\n})\n\n// Send a message to the worker thread\nworker.postMessage({\n    func: 'commands',\n    payload: msg.payload\n});\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 200,
+        "wires": [
+            []
+        ],
+        "icon": "font-awesome/fa-qrcode"
+    },
+    {
+        "id": "3fcc35deba3e1da9",
+        "type": "amqp in",
+        "z": "9ba7388927fccc31",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.csv.import.chunk",
+        "server": "56e870f2a20cabb0",
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "f449ebb8cc8d7088"
+            ]
+        ]
+    },
+    {
+        "id": "bafc0bcaf316df35",
+        "type": "amqp out",
+        "z": "9ba7388927fccc31",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.csv.import.chunk",
+        "server": "56e870f2a20cabb0",
+        "x": 570,
+        "y": 60,
         "wires": []
     }
 ]
