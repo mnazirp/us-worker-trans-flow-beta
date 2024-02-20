@@ -4,7 +4,7 @@
         "type": "tab",
         "label": "wt: geofencing",
         "disabled": false,
-        "info": "// nrlint function-eslint:off\n",
+        "info": "# localhost #1\n\n    `\n    prefetch data dari queue 1 message / 15 seconds\n    `\n\n# locahost #2\n\n    `\n    prefetch data dari queue 1 message / 5 seconds\n    `\n\n# locahost #3\n\n    `\n    prefetch data dari queue 1 message / 3 seconds\n    `\n\n# locahost:last\n\n    `\n    no prefetch for all flows\n    `\n",
         "env": []
     },
     {
@@ -12,7 +12,7 @@
         "type": "tab",
         "label": "wt: series",
         "disabled": false,
-        "info": "// nrlint function-eslint:off\n",
+        "info": "# localhost #1\n\n    `\n    prefetch data dari queue 1 message / 5 seconds\n    `\n\n# locahost #2\n\n    `\n    prefetch data dari queue 1 message / 17 seconds\n    `\n\n# localhost:last\n\n    `\n    no prefetch for all flows\n    `\n",
         "env": []
     },
     {
@@ -44,8 +44,8 @@
             "909f0bae520fb673",
             "73952f098b8ed22c"
         ],
-        "x": 14,
-        "y": 19,
+        "x": 34,
+        "y": 39,
         "w": 592,
         "h": 542
     },
@@ -175,8 +175,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 200,
-        "y": 140,
+        "x": 220,
+        "y": 160,
         "wires": [
             [
                 "55ed1342d1fd4d9c"
@@ -194,8 +194,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.filterby.division",
         "server": "a71ab4cd6eb395c0",
-        "x": 170,
-        "y": 200,
+        "x": 190,
+        "y": 220,
         "wires": [
             [
                 "61a97b32b17dbf53"
@@ -215,8 +215,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 160,
-        "y": 100,
+        "x": 180,
+        "y": 120,
         "wires": [
             [
                 "e8c0683cc5f8df67"
@@ -234,8 +234,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.filterby.division",
         "server": "70620c4aa929b5d8",
-        "x": 470,
-        "y": 140,
+        "x": 490,
+        "y": 160,
         "wires": []
     },
     {
@@ -251,8 +251,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 190,
-        "y": 240,
+        "x": 210,
+        "y": 260,
         "wires": [
             [
                 "b387dc3b8e3ba31b"
@@ -272,8 +272,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 200,
-        "y": 280,
+        "x": 220,
+        "y": 300,
         "wires": [
             [
                 "8ab2f8087937a815"
@@ -291,8 +291,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.filterby.block",
         "server": "70620c4aa929b5d8",
-        "x": 470,
-        "y": 280,
+        "x": 490,
+        "y": 300,
         "wires": []
     },
     {
@@ -305,8 +305,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.filterby.block",
         "server": "317dcd65d78d7168",
-        "x": 170,
-        "y": 340,
+        "x": 190,
+        "y": 360,
         "wires": [
             [
                 "2da97027bd0d7c7a"
@@ -326,8 +326,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 200,
-        "y": 380,
+        "x": 220,
+        "y": 400,
         "wires": [
             [
                 "5c21ea28c38aab09"
@@ -347,8 +347,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 200,
-        "y": 420,
+        "x": 220,
+        "y": 440,
         "wires": [
             [
                 "4b898ccf9f8a0eaa"
@@ -366,8 +366,8 @@
         "iotype": "4",
         "ioname": "wt.transaction",
         "server": "70620c4aa929b5d8",
-        "x": 440,
-        "y": 420,
+        "x": 460,
+        "y": 440,
         "wires": []
     },
     {
@@ -380,8 +380,8 @@
         "iotype": "4",
         "ioname": "wt.transaction",
         "server": "70620c4aa929b5d8",
-        "x": 200,
-        "y": 480,
+        "x": 220,
+        "y": 500,
         "wires": [
             [
                 "909f0bae520fb673"
@@ -401,8 +401,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 190,
-        "y": 520,
+        "x": 210,
+        "y": 540,
         "wires": [
             []
         ]
@@ -417,8 +417,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.perdevice",
         "server": "60b254c433dfc6f4",
-        "x": 180,
-        "y": 60,
+        "x": 200,
+        "y": 80,
         "wires": [
             [
                 "8f24af074f1a443c"
