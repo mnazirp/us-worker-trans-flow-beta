@@ -4,7 +4,7 @@
         "type": "tab",
         "label": "wt: geofencing",
         "disabled": false,
-        "info": "# localhost #1\n\n    `\n    prefetch data dari queue 1 message / 15 seconds\n    `\n\n# locahost #2\n\n    `\n    prefetch data dari queue 1 message / 5 seconds\n    `\n\n# locahost #3\n\n    `\n    prefetch data dari queue 1 message / 3 seconds\n    `\n\n# locahost:last\n\n    `\n    no prefetch for all flows\n    `\n",
+        "info": "# localhost #1\n\n    `\n    prefetch data dari queue 1 message / 15 seconds\n    `\n\n# locahost #2\n\n    `\n    prefetch data dari queue 1 message / 5 seconds\n    `\n\n# locahost #3\n\n    `\n    prefetch data dari queue 1 message / 3 seconds\n    `\n\n# locahost:last\n\n    `\n    no prefetch for all flows\n    `\n\n// nrlint function-eslint:off\n",
         "env": []
     },
     {
@@ -12,7 +12,7 @@
         "type": "tab",
         "label": "wt: series",
         "disabled": false,
-        "info": "# localhost #1\n\n    `\n    prefetch data dari queue 1 message / 5 seconds\n    `\n\n# locahost #2\n\n    `\n    prefetch data dari queue 1 message / 17 seconds\n    `\n\n# localhost:last\n\n    `\n    no prefetch for all flows\n    `\n",
+        "info": "# localhost #1\n\n    `\n    prefetch data dari queue 1 message / 5 seconds\n    `\n\n# locahost #2\n\n    `\n    prefetch data dari queue 1 message / 17 seconds\n    `\n\n# localhost:last\n\n    `\n    no prefetch for all flows\n    `\n\n// nrlint function-eslint:off\n",
         "env": []
     },
     {
