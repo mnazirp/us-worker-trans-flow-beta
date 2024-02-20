@@ -34,11 +34,8 @@
             "4b898ccf9f8a0eaa",
             "996035da1afdd16a",
             "909f0bae520fb673",
-            "d3ea6c903a99d251",
-            "2eba0d1cd9992f8b",
-            "d398667e86b896fc",
-            "d91e33e6c6d8d28c",
-            "73952f098b8ed22c"
+            "73952f098b8ed22c",
+            "48808eaf50437b94"
         ],
         "x": 14,
         "y": 19,
@@ -62,7 +59,7 @@
         "prefetch": true,
         "prefetchvalue": "1",
         "prefetchack": true,
-        "prefetchvalueack": "180000"
+        "prefetchvalueack": "15000"
     },
     {
         "id": "a71ab4cd6eb395c0",
@@ -79,14 +76,32 @@
         "usetopology": false,
         "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
         "prefetch": true,
-        "prefetchvalue": "30",
+        "prefetchvalue": "1",
         "prefetchack": true,
-        "prefetchvalueack": "180000"
+        "prefetchvalueack": "5000"
     },
     {
         "id": "317dcd65d78d7168",
         "type": "amqp-server",
         "z": "06c72d44e5729b2a",
+        "host": "localhost",
+        "port": "5630",
+        "vhost": "",
+        "keepalive": "30",
+        "usetls": false,
+        "verifyservercert": true,
+        "useca": false,
+        "ca": "",
+        "usetopology": false,
+        "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
+        "prefetch": true,
+        "prefetchvalue": "1",
+        "prefetchack": true,
+        "prefetchvalueack": "30000"
+    },
+    {
+        "id": "624985a905819743",
+        "type": "amqp-server",
         "host": "localhost",
         "port": "5630",
         "vhost": "",
@@ -133,12 +148,12 @@
         "topic": "",
         "iotype": "4",
         "ioname": "wt.tracking.filterby.division",
-        "server": "317dcd65d78d7168",
+        "server": "a71ab4cd6eb395c0",
         "x": 170,
         "y": 200,
         "wires": [
             [
-                "d398667e86b896fc"
+                "61a97b32b17dbf53"
             ]
         ]
     },
@@ -173,7 +188,7 @@
         "routingkey": "",
         "iotype": "4",
         "ioname": "wt.tracking.filterby.division",
-        "server": "60b254c433dfc6f4",
+        "server": "624985a905819743",
         "x": 470,
         "y": 140,
         "wires": []
@@ -230,7 +245,7 @@
         "routingkey": "",
         "iotype": "4",
         "ioname": "wt.tracking.filterby.block",
-        "server": "60b254c433dfc6f4",
+        "server": "624985a905819743",
         "x": 470,
         "y": 280,
         "wires": []
@@ -244,12 +259,12 @@
         "topic": "",
         "iotype": "4",
         "ioname": "wt.tracking.filterby.block",
-        "server": "a71ab4cd6eb395c0",
+        "server": "317dcd65d78d7168",
         "x": 170,
         "y": 340,
         "wires": [
             [
-                "2eba0d1cd9992f8b"
+                "2da97027bd0d7c7a"
             ]
         ]
     },
@@ -305,7 +320,7 @@
         "routingkey": "",
         "iotype": "4",
         "ioname": "wt.transaction",
-        "server": "60b254c433dfc6f4",
+        "server": "624985a905819743",
         "x": 440,
         "y": 420,
         "wires": []
@@ -319,7 +334,7 @@
         "topic": "",
         "iotype": "4",
         "ioname": "wt.transaction",
-        "server": "317dcd65d78d7168",
+        "server": "624985a905819743",
         "x": 200,
         "y": 480,
         "wires": [
@@ -345,105 +360,9 @@
         "y": 520,
         "wires": [
             [
-                "d91e33e6c6d8d28c"
+                "48808eaf50437b94"
             ]
         ]
-    },
-    {
-        "id": "d3ea6c903a99d251",
-        "type": "delay",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "8",
-        "rateUnits": "minute",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 440,
-        "y": 60,
-        "wires": [
-            [
-                "8f24af074f1a443c"
-            ]
-        ]
-    },
-    {
-        "id": "2eba0d1cd9992f8b",
-        "type": "delay",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "3",
-        "rateUnits": "minute",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 440,
-        "y": 340,
-        "wires": [
-            [
-                "2da97027bd0d7c7a"
-            ]
-        ]
-    },
-    {
-        "id": "d398667e86b896fc",
-        "type": "delay",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "minute",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 430,
-        "y": 200,
-        "wires": [
-            [
-                "61a97b32b17dbf53"
-            ]
-        ]
-    },
-    {
-        "id": "d91e33e6c6d8d28c",
-        "type": "debug",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "debug 222",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 430,
-        "y": 520,
-        "wires": []
     },
     {
         "id": "73952f098b8ed22c",
@@ -459,8 +378,26 @@
         "y": 60,
         "wires": [
             [
-                "d3ea6c903a99d251"
+                "8f24af074f1a443c"
             ]
         ]
+    },
+    {
+        "id": "48808eaf50437b94",
+        "type": "debug",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 520,
+        "wires": []
     }
 ]
