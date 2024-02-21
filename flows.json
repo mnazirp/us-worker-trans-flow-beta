@@ -160,7 +160,7 @@
         "prefetch": true,
         "prefetchvalue": "1",
         "prefetchack": true,
-        "prefetchvalueack": "17000"
+        "prefetchvalueack": "10000"
     },
     {
         "id": "e8c0683cc5f8df67",
@@ -528,7 +528,7 @@
         "routingkey": "",
         "iotype": "4",
         "ioname": "wt.csv.import.chunk",
-        "server": "56e870f2a20cabb0",
+        "server": "70620c4aa929b5d8",
         "x": 570,
         "y": 60,
         "wires": []
