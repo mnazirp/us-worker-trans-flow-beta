@@ -50,7 +50,7 @@
         "x": 34,
         "y": 39,
         "w": 592,
-        "h": 622
+        "h": 602
     },
     {
         "id": "89ff6cae3b742adc",
@@ -321,7 +321,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 200,
+        "x": 220,
         "y": 360,
         "wires": [
             [
@@ -340,7 +340,7 @@
         "iotype": "4",
         "ioname": "wt.tracking.filterby.block",
         "server": "70620c4aa929b5d8",
-        "x": 470,
+        "x": 490,
         "y": 360,
         "wires": []
     },
@@ -354,8 +354,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.filterby.block",
         "server": "317dcd65d78d7168",
-        "x": 170,
-        "y": 440,
+        "x": 190,
+        "y": 420,
         "wires": [
             [
                 "2da97027bd0d7c7a"
@@ -375,8 +375,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 200,
-        "y": 480,
+        "x": 220,
+        "y": 460,
         "wires": [
             [
                 "5c21ea28c38aab09"
@@ -396,8 +396,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 200,
-        "y": 520,
+        "x": 220,
+        "y": 500,
         "wires": [
             [
                 "4b898ccf9f8a0eaa"
@@ -415,8 +415,8 @@
         "iotype": "4",
         "ioname": "wt.transaction",
         "server": "70620c4aa929b5d8",
-        "x": 440,
-        "y": 520,
+        "x": 460,
+        "y": 500,
         "wires": []
     },
     {
@@ -429,8 +429,8 @@
         "iotype": "4",
         "ioname": "wt.transaction",
         "server": "5c5f4a38e92ed986",
-        "x": 200,
-        "y": 580,
+        "x": 220,
+        "y": 560,
         "wires": [
             [
                 "909f0bae520fb673"
@@ -450,8 +450,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 190,
-        "y": 620,
+        "x": 210,
+        "y": 600,
         "wires": [
             []
         ]
@@ -484,8 +484,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.send.block",
         "server": "70620c4aa929b5d8",
-        "x": 460,
-        "y": 240,
+        "x": 480,
+        "y": 260,
         "wires": []
     },
     {
@@ -498,7 +498,7 @@
         "iotype": "4",
         "ioname": "wt.tracking.send.block",
         "server": "5c5f4a38e92ed986",
-        "x": 180,
+        "x": 200,
         "y": 320,
         "wires": [
             [
