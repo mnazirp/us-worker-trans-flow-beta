@@ -75,7 +75,7 @@
             "0337520c937b5a0c"
         ],
         "x": 14,
-        "y": 19,
+        "y": 39,
         "w": 672,
         "h": 222
     },
@@ -528,7 +528,7 @@
         "ioname": "wt.csv.import",
         "server": "e907ba5364e5896f",
         "x": 110,
-        "y": 100,
+        "y": 120,
         "wires": [
             [
                 "bb6860a59623cd4b"
@@ -549,7 +549,7 @@
         "finalize": "",
         "libs": [],
         "x": 330,
-        "y": 100,
+        "y": 120,
         "wires": [
             [
                 "bafc0bcaf316df35"
@@ -571,7 +571,7 @@
         "finalize": "",
         "libs": [],
         "x": 410,
-        "y": 160,
+        "y": 180,
         "wires": [
             [
                 "e057ad1e131c55ee"
@@ -593,7 +593,7 @@
         "finalize": "",
         "libs": [],
         "x": 450,
-        "y": 200,
+        "y": 220,
         "wires": [
             []
         ],
@@ -610,7 +610,7 @@
         "ioname": "wt.csv.import.chunk",
         "server": "56e870f2a20cabb0",
         "x": 130,
-        "y": 160,
+        "y": 180,
         "wires": [
             [
                 "f449ebb8cc8d7088"
@@ -628,7 +628,7 @@
         "ioname": "wt.csv.import.chunk",
         "server": "70620c4aa929b5d8",
         "x": 570,
-        "y": 100,
+        "y": 120,
         "wires": []
     },
     {
@@ -639,7 +639,7 @@
         "name": "",
         "info": "## wt.csv.import\n1 message / 5 seconds\n\n## wt.csv.import.chunk\n1 message / 10 seconds",
         "x": 600,
-        "y": 60,
+        "y": 80,
         "wires": []
     }
 ]
