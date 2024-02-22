@@ -47,10 +47,37 @@
             "ba3d896fdaf8eaeb",
             "f125be1c760a4dd2"
         ],
+        "x": 34,
+        "y": 39,
+        "w": 592,
+        "h": 622
+    },
+    {
+        "id": "89ff6cae3b742adc",
+        "type": "group",
+        "z": "9ba7388927fccc31",
+        "name": "import from csv and save to timeseries",
+        "style": {
+            "label": true,
+            "fill": "#e3f3d3",
+            "fill-opacity": "0.4",
+            "color": "#ff0000",
+            "stroke": "none",
+            "label-position": "n"
+        },
+        "nodes": [
+            "7caf168b939b9028",
+            "bb6860a59623cd4b",
+            "f449ebb8cc8d7088",
+            "e057ad1e131c55ee",
+            "3fcc35deba3e1da9",
+            "bafc0bcaf316df35",
+            "0337520c937b5a0c"
+        ],
         "x": 14,
         "y": 19,
-        "w": 592,
-        "h": 642
+        "w": 672,
+        "h": 222
     },
     {
         "id": "60b254c433dfc6f4",
@@ -166,6 +193,25 @@
         "prefetchvalueack": "10000"
     },
     {
+        "id": "5c5f4a38e92ed986",
+        "type": "amqp-server",
+        "z": "06c72d44e5729b2a",
+        "host": "localhost",
+        "port": "5630",
+        "vhost": "",
+        "keepalive": "30",
+        "usetls": false,
+        "verifyservercert": true,
+        "useca": false,
+        "ca": "",
+        "usetopology": false,
+        "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
+        "prefetch": true,
+        "prefetchvalue": "1",
+        "prefetchack": true,
+        "prefetchvalueack": "1000"
+    },
+    {
         "id": "e8c0683cc5f8df67",
         "type": "function",
         "z": "06c72d44e5729b2a",
@@ -254,8 +300,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 190,
-        "y": 240,
+        "x": 210,
+        "y": 260,
         "wires": [
             [
                 "f837821d76ab526d"
@@ -429,6 +475,49 @@
         ]
     },
     {
+        "id": "f837821d76ab526d",
+        "type": "amqp out",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.send.block",
+        "server": "70620c4aa929b5d8",
+        "x": 460,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "ba3d896fdaf8eaeb",
+        "type": "amqp in",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.send.block",
+        "server": "5c5f4a38e92ed986",
+        "x": 180,
+        "y": 320,
+        "wires": [
+            [
+                "b387dc3b8e3ba31b"
+            ]
+        ]
+    },
+    {
+        "id": "f125be1c760a4dd2",
+        "type": "comment",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "info": "## wt.tracking.perdevice\n1 message / 3 seconds\n\n## wt.tracking.filterby.division\n1 message / 5 seconds\n\n## wt.tracking.send.block\n1 message / 3 seconds\n\n## wt.tracking.filterby.block\n1 message / 15 seconds\n\n## wt.tracking.filterby.block\n1 message / 1 second\n\n",
+        "x": 520,
+        "y": 80,
+        "wires": []
+    },
+    {
         "id": "7caf168b939b9028",
         "type": "amqp in",
         "z": "9ba7388927fccc31",
@@ -540,95 +629,6 @@
         "server": "70620c4aa929b5d8",
         "x": 570,
         "y": 100,
-        "wires": []
-    },
-    {
-        "id": "89ff6cae3b742adc",
-        "type": "group",
-        "z": "9ba7388927fccc31",
-        "name": "import from csv and save to timeseries",
-        "style": {
-            "label": true,
-            "fill": "#e3f3d3",
-            "fill-opacity": "0.4",
-            "color": "#ff0000",
-            "stroke": "none",
-            "label-position": "n"
-        },
-        "nodes": [
-            "7caf168b939b9028",
-            "bb6860a59623cd4b",
-            "f449ebb8cc8d7088",
-            "e057ad1e131c55ee",
-            "3fcc35deba3e1da9",
-            "bafc0bcaf316df35",
-            "0337520c937b5a0c"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 672,
-        "h": 222
-    },
-    {
-        "id": "5c5f4a38e92ed986",
-        "type": "amqp-server",
-        "z": "06c72d44e5729b2a",
-        "host": "localhost",
-        "port": "5630",
-        "vhost": "",
-        "keepalive": "30",
-        "usetls": false,
-        "verifyservercert": true,
-        "useca": false,
-        "ca": "",
-        "usetopology": false,
-        "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
-        "prefetch": true,
-        "prefetchvalue": "1",
-        "prefetchack": true,
-        "prefetchvalueack": "1000"
-    },
-    {
-        "id": "f837821d76ab526d",
-        "type": "amqp out",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "routingkey": "",
-        "iotype": "4",
-        "ioname": "wt.tracking.send.block",
-        "server": "70620c4aa929b5d8",
-        "x": 460,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "ba3d896fdaf8eaeb",
-        "type": "amqp in",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "topic": "",
-        "iotype": "4",
-        "ioname": "wt.tracking.send.block",
-        "server": "5c5f4a38e92ed986",
-        "x": 180,
-        "y": 320,
-        "wires": [
-            [
-                "b387dc3b8e3ba31b"
-            ]
-        ]
-    },
-    {
-        "id": "f125be1c760a4dd2",
-        "type": "comment",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "info": "## wt.tracking.perdevice\n1 message / 3 seconds\n\n## wt.tracking.filterby.division\n1 message / 5 seconds\n\n## wt.tracking.send.block\n1 message / 3 seconds\n\n## wt.tracking.filterby.block\n1 message / 15 seconds\n\n## wt.tracking.filterby.block\n1 message / 1 second\n\n",
-        "x": 520,
-        "y": 80,
         "wires": []
     },
     {
