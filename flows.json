@@ -42,12 +42,15 @@
             "4b898ccf9f8a0eaa",
             "996035da1afdd16a",
             "909f0bae520fb673",
-            "73952f098b8ed22c"
+            "73952f098b8ed22c",
+            "f837821d76ab526d",
+            "ba3d896fdaf8eaeb",
+            "f125be1c760a4dd2"
         ],
-        "x": 34,
-        "y": 39,
+        "x": 14,
+        "y": 19,
         "w": 592,
-        "h": 542
+        "h": 642
     },
     {
         "id": "60b254c433dfc6f4",
@@ -66,7 +69,7 @@
         "prefetch": true,
         "prefetchvalue": "1",
         "prefetchack": true,
-        "prefetchvalueack": "15000"
+        "prefetchvalueack": "3000"
     },
     {
         "id": "a71ab4cd6eb395c0",
@@ -104,7 +107,7 @@
         "prefetch": true,
         "prefetchvalue": "1",
         "prefetchack": true,
-        "prefetchvalueack": "30000"
+        "prefetchvalueack": "15000"
     },
     {
         "id": "e907ba5364e5896f",
@@ -160,7 +163,7 @@
         "prefetch": true,
         "prefetchvalue": "1",
         "prefetchack": true,
-        "prefetchvalueack": "17000"
+        "prefetchvalueack": "10000"
     },
     {
         "id": "e8c0683cc5f8df67",
@@ -244,18 +247,18 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "get block geojson",
-        "func": "const couchdb = global.get('couchdb');\nlet { area } = msg.payload;\nlet { psm, estate, division } = area;\n\ncouchdb.view('smart-geojson', 'block', 'geo-by-division', {\n    key: [psm, estate, division]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(block => {\n        msg.geoBlock = block;\n        node.send(msg);\n    });\n})\nreturn null;",
+        "func": "const couchdb = global.get('couchdb');\nlet { date, ident, area, tracking } = msg.payload;\nlet { psm, estate, division } = area;\n\ncouchdb.view('smart-geojson', 'block', 'geo-by-division', {\n    key: [psm, estate, division]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(block => {\n        node.send({ date, ident, tracking, block });\n    });\n})\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 210,
-        "y": 260,
+        "x": 190,
+        "y": 240,
         "wires": [
             [
-                "b387dc3b8e3ba31b"
+                "f837821d76ab526d"
             ]
         ]
     },
@@ -265,15 +268,15 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "send to worker",
-        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking } = msg.payload;\n\n    // Send a message to the worker thread\n    worker.postMessage({\n        func: 'checkLocationsInPloygon',\n        payload: {\n            locations: tracking,\n            geojson: msg.geoBlock\n        }\n    });\n    \n    worker.on('message', (result) => {\n        worker.terminate();\n        let { area, tracking } = result.data;\n        if (Array.isArray(tracking) && tracking.length > 0) {\n            node.send({\n                payload: {\n                    date,\n                    ident,\n                    area,\n                    tracking\n                }\n            });\n        }\n    });\n\n    worker.on('error', (err) => {\n        worker.terminate();\n        msg.error = err;\n        node.send(msg);\n    });\n} catch (err) {\n    node.warn(err);\n}",
+        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking, block } = msg.payload;\n\n    // Send a message to the worker thread\n    worker.postMessage({\n        func: 'checkLocationsInPloygon',\n        payload: {\n            locations: tracking,\n            geojson: block\n        }\n    });\n    \n    worker.on('message', (result) => {\n        worker.terminate();\n        let { area, tracking } = result.data;\n        if (Array.isArray(tracking) && tracking.length > 0) {\n            node.send({\n                payload: {\n                    date,\n                    ident,\n                    area,\n                    tracking\n                }\n            });\n        }\n    });\n\n    worker.on('error', (err) => {\n        worker.terminate();\n        msg.error = err;\n        node.send(msg);\n    });\n} catch (err) {\n    node.warn(err);\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 220,
-        "y": 300,
+        "x": 200,
+        "y": 360,
         "wires": [
             [
                 "8ab2f8087937a815"
@@ -291,8 +294,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.filterby.block",
         "server": "70620c4aa929b5d8",
-        "x": 490,
-        "y": 300,
+        "x": 470,
+        "y": 360,
         "wires": []
     },
     {
@@ -305,8 +308,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.filterby.block",
         "server": "317dcd65d78d7168",
-        "x": 190,
-        "y": 360,
+        "x": 170,
+        "y": 440,
         "wires": [
             [
                 "2da97027bd0d7c7a"
@@ -319,15 +322,15 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "get tree geojson",
-        "func": "const couchdb = global.get('couchdb');\nlet { date, ident, area } = msg.payload;\nlet { psm, estate, division, block } = area;\n\ncouchdb.view('smart-geojson', 'tree', 'geo-by-block', {\n    key: [psm, estate, division, block]\n}).then(res => {\n    let geoTree = res.data.rows?.map(x => x.value);\n    couchdb.view('transactions', 'filter', 'by-harvester-date', {\n        key: [ident[0], date]\n    }).then(res => {\n        let transIDs = res.data.rows?.map(x => x.value);\n        msg.geoTree = geoTree.filter(x => !transIDs.includes(x.properties['_id']));\n        node.send(msg);\n    });\n});\nreturn null;",
+        "func": "const couchdb = global.get('couchdb');\nlet { date, ident, area } = msg.payload;\nlet { psm, estate, division, block } = area;\n\ncouchdb.view('smart-geojson', 'tree', 'geo-by-block', {\n    key: [psm, estate, division, block]\n}).then(res => {\n    msg.geoTree = res.data.rows?.map(x => x.value);\n    node.send(msg);\n});\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 220,
-        "y": 400,
+        "x": 200,
+        "y": 480,
         "wires": [
             [
                 "5c21ea28c38aab09"
@@ -340,15 +343,15 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "send to worker",
-        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { ident, tracking } = msg.payload;\n    let geoTree = msg.geoTree;\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        if (result.data && Array.isArray(result.data) && result.data.length > 0) {\n            node.send({\n                payload: {\n                    ident,\n                    geofencing: result.data\n                }\n            });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        msg.error = err;\n        node.send(msg);\n    })\n\n    // Send a message to the worker thread\n    if (Array.isArray(geoTree) && geoTree.length > 0) {\n        worker.postMessage({\n            func: 'geofencing',\n            payload: {\n                locations: tracking,\n                geojson: geoTree\n            }\n        });\n    }\n    return null;\n} catch (err) {\n    node.warn(err);\n}",
+        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking } = msg.payload;\n    let geoTree = msg.geoTree;\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        if (result.data && Array.isArray(result.data) && result.data.length > 0) {\n            node.send({\n                payload: {\n                    date,\n                    ident,\n                    geofencing: result.data\n                }\n            });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        msg.error = err;\n        node.send(msg);\n    })\n\n    // Send a message to the worker thread\n    if (Array.isArray(geoTree) && geoTree.length > 0) {\n        worker.postMessage({\n            func: 'geofencing',\n            payload: {\n                locations: tracking,\n                geojson: geoTree\n            }\n        });\n    }\n    return null;\n} catch (err) {\n    node.warn(err);\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 220,
-        "y": 440,
+        "x": 200,
+        "y": 520,
         "wires": [
             [
                 "4b898ccf9f8a0eaa"
@@ -366,8 +369,8 @@
         "iotype": "4",
         "ioname": "wt.transaction",
         "server": "70620c4aa929b5d8",
-        "x": 460,
-        "y": 440,
+        "x": 440,
+        "y": 520,
         "wires": []
     },
     {
@@ -379,9 +382,9 @@
         "topic": "",
         "iotype": "4",
         "ioname": "wt.transaction",
-        "server": "70620c4aa929b5d8",
-        "x": 220,
-        "y": 500,
+        "server": "5c5f4a38e92ed986",
+        "x": 200,
+        "y": 580,
         "wires": [
             [
                 "909f0bae520fb673"
@@ -394,15 +397,15 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "create transactions",
-        "func": "try {\n    const couchdb = global.get('couchdb');\n\n    let { ident, geofencing } = msg.payload;\n    let [nik, device, imei] = ident;\n    let rs = [];\n    geofencing.forEach(geof => {\n        let { tree, loc } = geof;\n        let { _id, psm, estate, division, block } = tree.properties;\n        let transaction = rs.find(x => x.treeID == tree.properties._id);\n        let isHarvested = Number(loc[2]) > 0;\n        if (!transaction) {\n            rs.push({\n                treeID: _id,\n                psm: psm,\n                estate: estate,\n                division: division,\n                block: block,\n                harvester: nik,\n                harvested: Number(loc[2]),\n                lastHarvested: (isHarvested) ? new Date(loc[0]) : null,\n                visited: 1,\n                lastVisited: new Date(loc[0]),\n                meta: {\n                    harvestedPoints: (isHarvested) ? [loc] : [],\n                    visitedPoints: [loc]\n                },\n                createdBy: \"system\",\n                createdDate: new Date(),\n                modifiedBy: \"system\",\n                modifiedDate: new Date(),\n            });\n        } else {\n            if (isHarvested) {\n                transaction.harvested += Number(loc[2]);\n                transaction.lastHarvested = new Date(loc[0]);\n                transaction.meta.harvestedPoints.push(loc);\n            }\n            transaction.visited++;\n            transaction.meta.visitedPoints.push(loc);\n        }\n    });\n\n    rs.forEach(data => {\n        data.meta.harvestedPoints = JSON.stringify(data.meta.harvestedPoints);\n        data.meta.visitedPoints = JSON.stringify(data.meta.visitedPoints);\n    });\n\n    couchdb.bulkInsert('transactions', rs).then(res => {\n        node.send({\n            payload: res.data\n        });\n    }, (err) => {\n        node.send({\n            error: err\n        });\n    });\n} catch (err) {\n    node.warn(err);\n}",
+        "func": "try {\n    const couchdb = global.get('couchdb');\n\n    let { date, ident, geofencing } = msg.payload;\n    let [nik, device, imei] = ident;\n    couchdb.view('transactions', 'data', 'by-harvester-date', {\n        key: [ident[0], date]\n    }).then(res => {\n        let rs = res.data.rows?.map(x => x.value);\n        geofencing.forEach(geof => {\n            let { tree, loc } = geof;\n            let { _id, psm, estate, division, block } = tree.properties;\n            let transaction = rs.find(x => x.treeID == tree.properties._id);\n            let isHarvested = Number(loc[2]) > 0;\n            if (!transaction) {\n                rs.push({\n                    treeID: _id,\n                    psm: psm,\n                    estate: estate,\n                    division: division,\n                    block: block,\n                    harvester: nik,\n                    harvested: Number(loc[2]),\n                    lastHarvested: (isHarvested) ? new Date(loc[0]) : null,\n                    visited: 1,\n                    lastVisited: new Date(loc[0]),\n                    createdBy: \"system\",\n                    createdDate: new Date(),\n                    modifiedBy: \"system\",\n                    modifiedDate: new Date(),\n                });\n            } else {\n                if (isHarvested) {\n                    transaction.harvested += Number(loc[2]);\n                    transaction.lastHarvested = new Date(loc[0]);\n                }\n                transaction.visited++;\n            }\n        });\n\n        couchdb.bulkInsert('transactions', rs).then(res => {\n            node.send({\n                payload: res.data\n            });\n        }, (err) => {\n            node.send({\n                error: err\n            });\n        });\n        node.send(msg);\n    });\n} catch (err) {\n    node.warn(err);\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 210,
-        "y": 540,
+        "x": 190,
+        "y": 620,
         "wires": [
             []
         ]
@@ -429,13 +432,14 @@
         "id": "7caf168b939b9028",
         "type": "amqp in",
         "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
         "name": "",
         "topic": "",
         "iotype": "4",
         "ioname": "wt.csv.import",
         "server": "e907ba5364e5896f",
         "x": 110,
-        "y": 60,
+        "y": 100,
         "wires": [
             [
                 "bb6860a59623cd4b"
@@ -446,6 +450,7 @@
         "id": "bb6860a59623cd4b",
         "type": "function",
         "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
         "name": "chunk data",
         "func": "// let payload = msg.payload;\n// msg.ori = payload;\n// msg.payload = payload;\n\n// const chunkSize = 10000;\n\n// if (payload.length > chunkSize) {\n//   for (let i = 0; i < payload.length; i += chunkSize) {\n//     const chunk = payload.slice(i, i + chunkSize);\n//     node.send({\n//       payload: chunk\n//     });\n//   }\n// } else {\n//   node.send({\n//     payload\n//   });\n// }\n// return null;\n\nlet payload = msg.payload;\n\nconst chunkSize = 1000;\nconst delayBetweenChunks = 1000;\n\nfunction processArrayWithDelay(startIndex) {\n  const endIndex = Math.min(startIndex + chunkSize, payload.length);\n  const chunk = payload.slice(startIndex, endIndex);\n\n  node.send({\n    payload: chunk\n  });\n\n  if (endIndex < payload.length) {\n    setTimeout(() => {\n      processArrayWithDelay(endIndex);\n    }, delayBetweenChunks);\n  }\n}\n\n// Start processing the array with a delay\nprocessArrayWithDelay(0);\nreturn null;",
         "outputs": 1,
@@ -455,7 +460,7 @@
         "finalize": "",
         "libs": [],
         "x": 330,
-        "y": 60,
+        "y": 100,
         "wires": [
             [
                 "bafc0bcaf316df35"
@@ -467,8 +472,9 @@
         "id": "f449ebb8cc8d7088",
         "type": "function",
         "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
         "name": "build create & add commands",
-        "func": "const redisTS = global.get('redisTS');\n\nredisTS.commands([['keys', 'wt:*']]).then(rs => {\n    let wtKeys = rs.data[0];\n    let payload = msg.payload;\n    let suffix = ['deviceDatetime', 'latitude', 'longitude', 'altitude', 'speed', 'event', 'battery'];\n    let addCommands = [];\n    let createPayload = [];\n\n    for (const rec of payload) {\n        let { deviceID, deviceDatetime, latitude, longitude, altitude, event, speed, battery, imei } = rec;\n        if (deviceDatetime && deviceDatetime != null && deviceDatetime != \"\") {\n            suffix.forEach(suf => {\n                if (!wtKeys.includes(`wt:${deviceID}:${suf}`) && createPayload.find(x => x.key == `wt:${deviceID}:${suf}`) == undefined) {\n                    createPayload.push({\n                        key: `wt:${deviceID}:${suf}`,\n                        retention: 0,\n                        duplicatePolicy: (suf != 'event') ? 'LAST' : 'SUM',\n                        labels: ['type', 'worker-tracker', 'deviceID', deviceID, 'topic', suf, 'imei', imei],\n                        encoding: 'UNCOMPRESSED'\n                    });\n                }\n            })\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:deviceDatetime`,\n                new Date(deviceDatetime).getTime().toString(),\n                new Date(deviceDatetime).getTime().toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:latitude`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(latitude).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:longitude`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(longitude).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:altitude`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(altitude).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:speed`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(speed).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:event`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(event).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:battery`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(battery).toString()\n            ]);\n        }\n    }\n\n    redisTS.tsCreate(createPayload).then(createRS => {\n        msg.payload = addCommands;\n        node.send(msg);\n    })\n});\n\nreturn null;\n\n",
+        "func": "const redisTS = global.get('redisTS');\n\nredisTS.commands([['keys', 'wt:*']]).then(rs => {\n    let wtKeys = rs.data[0];\n    let payload = msg.payload;\n    let suffix = ['deviceDatetime', 'latitude', 'longitude', 'altitude', 'speed', 'event', 'battery'];\n    let addCommands = [];\n    let createPayload = [];\n\n    for (const rec of payload) {\n        let { deviceID, deviceDatetime, latitude, longitude, altitude, event, speed, battery } = rec;\n        if (deviceDatetime && deviceDatetime != null && deviceDatetime != \"\") {\n            suffix.forEach(suf => {\n                if (!wtKeys.includes(`wt:${deviceID}:${suf}`) && createPayload.find(x => x.key == `wt:${deviceID}:${suf}`) == undefined) {\n                    createPayload.push({\n                        key: `wt:${deviceID}:${suf}`,\n                        retention: 0,\n                        duplicatePolicy: (suf != 'event') ? 'LAST' : 'SUM',\n                        labels: ['type', 'worker-tracker', 'deviceID', deviceID, 'topic', suf],\n                        encoding: 'UNCOMPRESSED'\n                    });\n                }\n            })\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:deviceDatetime`,\n                new Date(deviceDatetime).getTime().toString(),\n                new Date(deviceDatetime).getTime().toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:latitude`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(latitude).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:longitude`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(longitude).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:altitude`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(altitude).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:speed`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(speed).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:event`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(event).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:battery`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(battery).toString()\n            ]);\n        }\n    }\n\n    redisTS.tsCreate(createPayload).then(createRS => {\n        msg.payload = addCommands;\n        node.send(msg);\n    })\n});\n\nreturn null;\n\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -488,6 +494,7 @@
         "id": "e057ad1e131c55ee",
         "type": "function",
         "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
         "name": "ts.add data series",
         "func": "const w = global.get('worker');\nconst worker = new w.Worker('./workers/w-redis-ts.js', { workerData: 'send data csv to timeseries' });\n\nworker.on('message', (result) => {\n    worker.terminate();\n    node.send({ payload: result });\n});\nworker.on('error', (err) => {\n    worker.terminate();\n    msg.error = err;\n    node.send(msg);\n})\n\n// Send a message to the worker thread\nworker.postMessage({\n    func: 'commands',\n    payload: msg.payload\n});\nreturn null;",
         "outputs": 1,
@@ -507,6 +514,7 @@
         "id": "3fcc35deba3e1da9",
         "type": "amqp in",
         "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
         "name": "",
         "topic": "",
         "iotype": "4",
@@ -524,12 +532,113 @@
         "id": "bafc0bcaf316df35",
         "type": "amqp out",
         "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
         "name": "",
         "routingkey": "",
         "iotype": "4",
         "ioname": "wt.csv.import.chunk",
-        "server": "56e870f2a20cabb0",
+        "server": "70620c4aa929b5d8",
         "x": 570,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "89ff6cae3b742adc",
+        "type": "group",
+        "z": "9ba7388927fccc31",
+        "name": "import from csv and save to timeseries",
+        "style": {
+            "label": true,
+            "fill": "#e3f3d3",
+            "fill-opacity": "0.4",
+            "color": "#ff0000",
+            "stroke": "none",
+            "label-position": "n"
+        },
+        "nodes": [
+            "7caf168b939b9028",
+            "bb6860a59623cd4b",
+            "f449ebb8cc8d7088",
+            "e057ad1e131c55ee",
+            "3fcc35deba3e1da9",
+            "bafc0bcaf316df35",
+            "0337520c937b5a0c"
+        ],
+        "x": 14,
+        "y": 19,
+        "w": 672,
+        "h": 222
+    },
+    {
+        "id": "5c5f4a38e92ed986",
+        "type": "amqp-server",
+        "z": "06c72d44e5729b2a",
+        "host": "localhost",
+        "port": "5630",
+        "vhost": "",
+        "keepalive": "30",
+        "usetls": false,
+        "verifyservercert": true,
+        "useca": false,
+        "ca": "",
+        "usetopology": false,
+        "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
+        "prefetch": true,
+        "prefetchvalue": "1",
+        "prefetchack": true,
+        "prefetchvalueack": "1000"
+    },
+    {
+        "id": "f837821d76ab526d",
+        "type": "amqp out",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.send.block",
+        "server": "70620c4aa929b5d8",
+        "x": 460,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "ba3d896fdaf8eaeb",
+        "type": "amqp in",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.send.block",
+        "server": "5c5f4a38e92ed986",
+        "x": 180,
+        "y": 320,
+        "wires": [
+            [
+                "b387dc3b8e3ba31b"
+            ]
+        ]
+    },
+    {
+        "id": "f125be1c760a4dd2",
+        "type": "comment",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "info": "## wt.tracking.perdevice\n1 message / 3 seconds\n\n## wt.tracking.filterby.division\n1 message / 5 seconds\n\n## wt.tracking.send.block\n1 message / 3 seconds\n\n## wt.tracking.filterby.block\n1 message / 15 seconds\n\n## wt.tracking.filterby.block\n1 message / 1 second\n\n",
+        "x": 520,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "0337520c937b5a0c",
+        "type": "comment",
+        "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
+        "name": "",
+        "info": "## wt.csv.import\n1 message / 5 seconds\n\n## wt.csv.import.chunk\n1 message / 10 seconds",
+        "x": 600,
         "y": 60,
         "wires": []
     }
