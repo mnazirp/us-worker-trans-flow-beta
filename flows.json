@@ -16,6 +16,39 @@
         "env": []
     },
     {
+        "id": "ef0e7b589320b81a",
+        "type": "subflow",
+        "name": "sub: couchdb-insert",
+        "info": "# Input\n\n### msg.sub\n\n    {\n        database: 'smart-bucket',\n        doc: {}\n    }\n\n// nrlint function-eslint:off\n",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "6ae3265eb63f2da2"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 340,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "447e985e09671110",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#FFAAAA"
+    },
+    {
         "id": "9f1e98d4426d35e3",
         "type": "group",
         "z": "06c72d44e5729b2a",
@@ -45,7 +78,9 @@
             "73952f098b8ed22c",
             "f837821d76ab526d",
             "ba3d896fdaf8eaeb",
-            "f125be1c760a4dd2"
+            "f125be1c760a4dd2",
+            "bded51ad98ed48c1",
+            "d73860b3632e10cd"
         ],
         "x": 34,
         "y": 39,
@@ -96,7 +131,7 @@
         "prefetch": true,
         "prefetchvalue": "1",
         "prefetchack": true,
-        "prefetchvalueack": "3000"
+        "prefetchvalueack": "30000"
     },
     {
         "id": "a71ab4cd6eb395c0",
@@ -209,7 +244,69 @@
         "prefetch": true,
         "prefetchvalue": "1",
         "prefetchack": true,
-        "prefetchvalueack": "1000"
+        "prefetchvalueack": "3000"
+    },
+    {
+        "id": "e42544d355f50764",
+        "type": "http request",
+        "z": "ef0e7b589320b81a",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 210,
+        "y": 120,
+        "wires": [
+            [
+                "447e985e09671110"
+            ]
+        ]
+    },
+    {
+        "id": "6ae3265eb63f2da2",
+        "type": "function",
+        "z": "ef0e7b589320b81a",
+        "name": "read sub",
+        "func": "msg.backup = msg.payload;\n\nlet { database, doc } = msg.sub;\nmsg.payload = doc;\nmsg.headers = {\n    \"Authorization\": \"Basic \" +\n        Buffer.from(`${env.get('DOCS_MASTER_USER')}:${env.get('DOCS_MASTER_PASSWORD')}`).toString(\"base64\"),\n    \"Content-Type\": \"application/json; charset=utf-8\"\n}\nmsg.url = `${env.get('DOC_MASTER_DOMAIN')}/${database}`;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "e42544d355f50764"
+            ]
+        ]
+    },
+    {
+        "id": "447e985e09671110",
+        "type": "function",
+        "z": "ef0e7b589320b81a",
+        "name": "result",
+        "func": "msg.sub = JSON.parse(msg.payload);\nmsg.payload = msg.backup;\ndelete msg.backup;\ndelete msg.url;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 160,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "e8c0683cc5f8df67",
@@ -257,7 +354,7 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "get SMSE divisions geojson",
-        "func": "const couchdb = global.get('couchdb');\n\ncouchdb.view('smart-geojson', 'division', 'geo-by-estate', {\n    key: ['PSM 2', \"SMSE\"]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(div => {\n        msg.geoDivision = div;\n        node.send(msg);\n    });\n})\nreturn null;",
+        "func": "const couchdb = global.get('couchdb');\nconsole.log(msg.payload.series[0]);\ncouchdb.view('smart-geojson', 'division', 'geo-by-estate', {\n    key: ['PSM 2', \"SMSE\"]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(div => {\n        msg.geoDivision = div;\n        node.send(msg);\n    });\n})\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -389,7 +486,7 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "send to worker",
-        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking } = msg.payload;\n    let geoTree = msg.geoTree;\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        if (result.data && Array.isArray(result.data) && result.data.length > 0) {\n            node.send({\n                payload: {\n                    date,\n                    ident,\n                    geofencing: result.data\n                }\n            });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        msg.error = err;\n        node.send(msg);\n    })\n\n    // Send a message to the worker thread\n    if (Array.isArray(geoTree) && geoTree.length > 0) {\n        worker.postMessage({\n            func: 'geofencing',\n            payload: {\n                locations: tracking,\n                geojson: geoTree\n            }\n        });\n    }\n    return null;\n} catch (err) {\n    node.warn(err);\n}",
+        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking } = msg.payload;\n    let geoTree = msg.geoTree;\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        if (result.data && Array.isArray(result.data) && result.data.length > 0) {\n            node.send({\n                payload: {\n                    date,\n                    ident,\n                    geofencing: result.data\n                }\n            });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        msg.error = err;\n        node.send(msg);\n    })\n\n    // Send a message to the worker thread\n    if (Array.isArray(geoTree) && geoTree.length > 0) {\n        worker.postMessage({\n            func: 'distance',\n            payload: {\n                locations: tracking,\n                geojson: geoTree\n            }\n        });\n    }\n    return null;\n} catch (err) {\n    node.warn(err);\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -400,7 +497,7 @@
         "y": 500,
         "wires": [
             [
-                "4b898ccf9f8a0eaa"
+                "bded51ad98ed48c1"
             ]
         ],
         "icon": "font-awesome/fa-qrcode"
@@ -416,7 +513,7 @@
         "ioname": "wt.transaction",
         "server": "70620c4aa929b5d8",
         "x": 460,
-        "y": 500,
+        "y": 600,
         "wires": []
     },
     {
@@ -512,10 +609,43 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "",
-        "info": "## wt.tracking.perdevice\n1 message / 3 seconds\n\n## wt.tracking.filterby.division\n1 message / 5 seconds\n\n## wt.tracking.send.block\n1 message / 3 seconds\n\n## wt.tracking.filterby.block\n1 message / 15 seconds\n\n## wt.tracking.filterby.block\n1 message / 1 second\n\n",
+        "info": "## wt.tracking.perdevice\n1 message / 30 seconds\n\n## wt.tracking.filterby.division\n1 message / 5 seconds\n\n## wt.tracking.send.block\n1 message / 3 seconds\n\n## wt.tracking.filterby.block\n1 message / 15 seconds\n\n## wt.tracking.filterby.block\n1 message / 15 second\n\n",
         "x": 520,
         "y": 80,
         "wires": []
+    },
+    {
+        "id": "bded51ad98ed48c1",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "function 2",
+        "func": "msg.sub = {\n    database: 'pra-trans',\n    doc: msg.payload\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 460,
+        "wires": [
+            [
+                "d73860b3632e10cd"
+            ]
+        ]
+    },
+    {
+        "id": "d73860b3632e10cd",
+        "type": "subflow:ef0e7b589320b81a",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "x": 470,
+        "y": 500,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "7caf168b939b9028",
