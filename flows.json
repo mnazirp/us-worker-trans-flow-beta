@@ -78,9 +78,7 @@
             "73952f098b8ed22c",
             "f837821d76ab526d",
             "ba3d896fdaf8eaeb",
-            "f125be1c760a4dd2",
-            "bded51ad98ed48c1",
-            "d73860b3632e10cd"
+            "f125be1c760a4dd2"
         ],
         "x": 34,
         "y": 39,
@@ -497,7 +495,7 @@
         "y": 500,
         "wires": [
             [
-                "bded51ad98ed48c1"
+                "4b898ccf9f8a0eaa"
             ]
         ],
         "icon": "font-awesome/fa-qrcode"
@@ -513,7 +511,7 @@
         "ioname": "wt.transaction",
         "server": "70620c4aa929b5d8",
         "x": 460,
-        "y": 600,
+        "y": 500,
         "wires": []
     },
     {
@@ -540,7 +538,7 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "create transactions",
-        "func": "try {\n    const couchdb = global.get('couchdb');\n\n    let { date, ident, geofencing } = msg.payload;\n    let [nik, device, imei] = ident;\n    couchdb.view('transactions', 'data', 'by-harvester-date', {\n        key: [ident[0], date]\n    }).then(res => {\n        let rs = res.data.rows?.map(x => x.value);\n        geofencing.forEach(geof => {\n            let { tree, loc } = geof;\n            let { _id, psm, estate, division, block } = tree.properties;\n            let transaction = rs.find(x => x.treeID == tree.properties._id);\n            let isHarvested = Number(loc[2]) > 0;\n            if (!transaction) {\n                rs.push({\n                    treeID: _id,\n                    psm: psm,\n                    estate: estate,\n                    division: division,\n                    block: block,\n                    harvester: nik,\n                    harvested: Number(loc[2]),\n                    lastHarvested: (isHarvested) ? new Date(loc[0]) : null,\n                    visited: 1,\n                    lastVisited: new Date(loc[0]),\n                    createdBy: \"system\",\n                    createdDate: new Date(),\n                    modifiedBy: \"system\",\n                    modifiedDate: new Date(),\n                });\n            } else {\n                if (isHarvested) {\n                    transaction.harvested += Number(loc[2]);\n                    transaction.lastHarvested = new Date(loc[0]);\n                }\n                transaction.visited++;\n            }\n        });\n\n        couchdb.bulkInsert('transactions', rs).then(res => {\n            node.send({\n                payload: res.data\n            });\n        }, (err) => {\n            node.send({\n                error: err\n            });\n        });\n        node.send(msg);\n    });\n} catch (err) {\n    node.warn(err);\n}",
+        "func": "try {\n    const couchdb = global.get('couchdb');\n\n    let { date, ident, geofencing } = msg.payload;\n    let [nik, device, imei] = ident;\n    couchdb.view('transactions', 'filter', 'by-harvester-date', {\n        key: [ident[0], date]\n    }).then(res => {\n        let rs = res.data.rows?.map(x => x.value);\n        geofencing.forEach(geof => {\n            let { estate, division, block, tree, timestamp, event } = geof;\n            let transaction = rs.find(x => x.treeID == tree.properties._id);\n            let isHarvested = Number(event) > 0;\n            if (!transaction) {\n                rs.push({\n                    treeID: tree,\n                    estate: estate,\n                    division: division,\n                    block: block,\n                    harvester: nik,\n                    harvested: Number(event),\n                    lastHarvested: (isHarvested) ? new Date(timestamp) : null,\n                    visited: 1,\n                    lastVisited: new Date(timestamp),\n                    createdBy: \"system\",\n                    createdDate: new Date(),\n                    modifiedBy: \"system\",\n                    modifiedDate: new Date(),\n                });\n            } else {\n                if (isHarvested) {\n                    transaction.harvested += Number(event);\n                    transaction.lastHarvested = new Date(timestamp);\n                }\n                transaction.visited++;\n            }\n        });\n\n        couchdb.bulkInsert('transactions', rs).then(res => {\n            node.send({\n                payload: res.data\n            });\n        }, (err) => {\n            node.send({\n                error: err\n            });\n        });\n        node.send(msg);\n    });\n} catch (err) {\n    node.warn(err);\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -613,39 +611,6 @@
         "x": 520,
         "y": 80,
         "wires": []
-    },
-    {
-        "id": "bded51ad98ed48c1",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "function 2",
-        "func": "msg.sub = {\n    database: 'pra-trans',\n    doc: msg.payload\n}\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 440,
-        "y": 460,
-        "wires": [
-            [
-                "d73860b3632e10cd"
-            ]
-        ]
-    },
-    {
-        "id": "d73860b3632e10cd",
-        "type": "subflow:ef0e7b589320b81a",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "x": 470,
-        "y": 500,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "7caf168b939b9028",
