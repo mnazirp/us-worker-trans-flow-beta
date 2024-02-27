@@ -80,7 +80,8 @@
             "ba3d896fdaf8eaeb",
             "f125be1c760a4dd2",
             "f602804499675a85",
-            "87d68a8c119fefa3"
+            "87d68a8c119fefa3",
+            "c89e45c73f0511d6"
         ],
         "x": 34,
         "y": 39,
@@ -486,7 +487,7 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "send to worker",
-        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking } = msg.payload;\n    let geoTree = msg.geoTree;\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        if (result.data && Array.isArray(result.data) && result.data.length > 0) {\n            node.send({\n                payload: {\n                    date,\n                    ident,\n                    geofencing: result.data\n                }\n            });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        msg.error = err;\n        node.send(msg);\n    })\n\n    // Send a message to the worker thread\n    if (Array.isArray(geoTree) && geoTree.length > 0) {\n        worker.postMessage({\n            func: 'distance',\n            payload: {\n                locations: tracking,\n                geojson: geoTree\n            }\n        });\n    }\n    return null;\n} catch (err) {\n    node.warn(err);\n}",
+        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking } = msg.payload;\n    let geoTree = msg.geoTree;\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        if (result.data && Array.isArray(result.data.inrange) && result.data.inrange.length > 0) {\n            node.send({\n                payload: {\n                    date,\n                    ident,\n                    geofencing: result.data\n                }\n            });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        msg.error = err;\n        node.send(msg);\n    })\n\n    // Send a message to the worker thread\n    if (Array.isArray(geoTree) && geoTree.length > 0) {\n        worker.postMessage({\n            func: 'distance',\n            payload: {\n                locations: tracking,\n                geojson: geoTree,\n                distance: 4\n            }\n        });\n    }\n    return null;\n} catch (err) {\n    node.warn(err);\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -497,8 +498,8 @@
         "y": 500,
         "wires": [
             [
-                "4b898ccf9f8a0eaa",
-                "87d68a8c119fefa3"
+                "87d68a8c119fefa3",
+                "c89e45c73f0511d6"
             ]
         ],
         "icon": "font-awesome/fa-qrcode"
@@ -645,6 +646,27 @@
         "wires": [
             [
                 "f602804499675a85"
+            ]
+        ]
+    },
+    {
+        "id": "c89e45c73f0511d6",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "select inrange",
+        "func": "let { date, ident, geofencing } = msg.payload\ngeofencing = geofencing.inrange\nnode.send({ date, ident, geofencing });\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 460,
+        "wires": [
+            [
+                "4b898ccf9f8a0eaa"
             ]
         ]
     },
