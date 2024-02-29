@@ -248,6 +248,25 @@
         "prefetchvalueack": "3000"
     },
     {
+        "id": "5471df75ac676292",
+        "type": "amqp-server",
+        "z": "9ba7388927fccc31",
+        "host": "${BROKER_DOMAIN}",
+        "port": "${BROKER_PORT}",
+        "vhost": "",
+        "keepalive": "30",
+        "usetls": false,
+        "verifyservercert": true,
+        "useca": false,
+        "ca": "",
+        "usetopology": false,
+        "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
+        "prefetch": true,
+        "prefetchvalue": "1",
+        "prefetchack": true,
+        "prefetchvalueack": "5000"
+    },
+    {
         "id": "e42544d355f50764",
         "type": "http request",
         "z": "ef0e7b589320b81a",
@@ -542,7 +561,7 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "create transactions",
-        "func": "try {\n    const couchdb = global.get('couchdb');\n\n    let { date, ident, geofencing } = msg.payload;\n    let [nik, device, imei] = ident;\n    couchdb.view('transactions', 'filter', 'by-harvester-date', {\n        key: [ident[0], date]\n    }).then(res => {\n        let rs = res.data.rows?.map(x => x.value);\n        geofencing.forEach(geof => {\n            let { psm, estate, division, block, tree, timestamp, event } = geof;\n            let transaction = rs.find(x => x.treeID == tree);\n            let isHarvested = Number(event) > 0;\n            if (!transaction) {\n                rs.push({\n                    treeID: tree,\n                    psm: psm,\n                    estate: estate,\n                    division: division,\n                    block: block,\n                    harvester: nik,\n                    harvested: Number(event),\n                    lastHarvested: (isHarvested) ? new Date(timestamp) : null,\n                    visited: 1,\n                    lastVisited: new Date(timestamp),\n                    createdBy: \"system\",\n                    createdDate: new Date(),\n                    modifiedBy: \"system\",\n                    modifiedDate: new Date(),\n                });\n            } else {\n                if (isHarvested) {\n                    transaction.harvested += Number(event);\n                    transaction.lastHarvested = new Date(timestamp);\n                }\n                transaction.visited++;\n            }\n        });\n\n        couchdb.bulkInsert('transactions', rs).then(res => {\n            node.send({\n                payload: res.data\n            });\n        }, (err) => {\n            node.send({\n                error: err\n            });\n        });\n        node.send(msg);\n    });\n} catch (err) {\n    node.warn(err);\n}",
+        "func": "try {\n    const couchdb = global.get('couchdb');\n\n    let { date, ident, geofencing } = msg.payload;\n    let [nik, device, imei] = ident;\n    couchdb.view('transactions', 'filter', 'by-harvester-date', {\n        key: [ident[0], date]\n    }).then(res => {\n        let rs = res.data.rows?.map(x => x.value);\n        geofencing.forEach(geof => {\n            let { psm, estate, division, block, tree, timestamp, event } = geof;\n            let transaction = rs.find(x => x.treeID == tree);\n            let isHarvested = Number(event) > 0;\n            if (!transaction) {\n                rs.push({\n                    treeID: tree,\n                    psm: psm,\n                    estate: estate,\n                    division: division,\n                    block: block,\n                    harvester: nik,\n                    harvested: Number(event),\n                    lastHarvested: (isHarvested) ? new Date(timestamp) : null,\n                    visited: 1,\n                    lastVisited: new Date(timestamp),\n                    createdBy: \"system\",\n                    createdDate: new Date(),\n                    modifiedBy: \"system\",\n                    modifiedDate: new Date(),\n                });\n            } else {\n                if (isHarvested) {\n                    transaction.harvested += Number(event);\n                    transaction.lastHarvested = new Date(timestamp);\n                }\n                transaction.visited++;\n            }\n        });\n\n        couchdb.bulk('transactions', rs).then(res => {\n            node.send({\n                payload: res.data\n            });\n        }, (err) => {\n            node.send({\n                error: err\n            });\n        });\n        node.send(msg);\n    });\n} catch (err) {\n    node.warn(err);\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -796,18 +815,56 @@
         "wires": []
     },
     {
-        "id": "c599dd6581b11d6b",
+        "id": "e3a50e6cb96cc3b3",
         "type": "amqp in",
         "z": "9ba7388927fccc31",
         "name": "",
         "topic": "",
         "iotype": "4",
-        "ioname": "wt.csv.import",
-        "server": "56e870f2a20cabb0",
-        "x": 130,
-        "y": 340,
+        "ioname": "wt.save.timeseries.to.couchdb",
+        "server": "5471df75ac676292",
+        "x": 170,
+        "y": 320,
+        "wires": [
+            [
+                "dd42509446494f20",
+                "205ff4b80b127b2c"
+            ]
+        ]
+    },
+    {
+        "id": "dd42509446494f20",
+        "type": "function",
+        "z": "9ba7388927fccc31",
+        "name": "function 1",
+        "func": "const couchdb = global.get('couchdb');\n\ncouchdb.bulk('smart-timeseries', msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 320,
         "wires": [
             []
         ]
+    },
+    {
+        "id": "205ff4b80b127b2c",
+        "type": "debug",
+        "z": "9ba7388927fccc31",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 360,
+        "wires": []
     }
 ]
