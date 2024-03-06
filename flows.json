@@ -67,7 +67,7 @@
             "fill-opacity": "0.4",
             "color": "#ff0000",
             "stroke": "none",
-            "label-position": "n"
+            "label-position": "sw"
         },
         "nodes": [
             "7caf168b939b9028",
@@ -85,65 +85,34 @@
         "x": 14,
         "y": 39,
         "w": 1072,
-        "h": 282
+        "h": 290
     },
     {
         "id": "9f1e98d4426d35e3",
         "type": "group",
         "z": "06c72d44e5729b2a",
-        "name": "wroker tracker transaction",
+        "name": "wt: get divisions in estate and filter longlat by division",
         "style": {
             "label": true,
-            "label-position": "n",
             "stroke": "none",
             "color": "#ff0000",
-            "fill": "#e3f3d3",
-            "fill-opacity": "0.4"
+            "fill": "#c8e7a7",
+            "fill-opacity": "0.5"
         },
         "nodes": [
             "e8c0683cc5f8df67",
-            "d18b39342c8a59d3",
             "8f24af074f1a443c",
             "55ed1342d1fd4d9c",
-            "61a97b32b17dbf53",
-            "b387dc3b8e3ba31b",
-            "b765932bf69d2d0f",
-            "2da97027bd0d7c7a",
-            "5c21ea28c38aab09",
-            "4b898ccf9f8a0eaa",
-            "996035da1afdd16a",
-            "909f0bae520fb673",
             "73952f098b8ed22c",
-            "f837821d76ab526d",
-            "ba3d896fdaf8eaeb",
-            "f125be1c760a4dd2",
-            "c89e45c73f0511d6",
-            "d821f6f9cad4c1e3",
-            "3e4daddff5e5ad16",
-            "81a6112a04ada68d",
-            "c31749368d55472c",
             "03e630b763e1fad0",
             "8355d6c2d3494ee7",
             "e7dcaf026846bb1c",
-            "762ef0203613776d",
-            "da91dddbdc52b6b0",
-            "e5902ab2e5a442ed",
-            "074f12192bc2b669",
-            "dcab231f242dffc6",
-            "e24a92cbea2dda17",
-            "e37bbc66e56dd4ba",
-            "20cfbbe2cba42572",
-            "6af606d2c8e820c3",
-            "8ab2f8087937a815",
-            "c9e177305f909c86",
-            "c3ba33ccf69567cd",
-            "2fc4962bc9f4b887",
-            "85c63351f4dbcb6a"
+            "762ef0203613776d"
         ],
         "x": 34,
-        "y": 39,
+        "y": 79,
         "w": 752,
-        "h": 1222
+        "h": 202
     },
     {
         "id": "48e7b095e8d92958",
@@ -155,8 +124,7 @@
             "fill": "#e3f3d3",
             "fill-opacity": "0.45",
             "label": true,
-            "color": "#ff3f3f",
-            "label-position": "n"
+            "color": "#ff3f3f"
         },
         "nodes": [
             "e3a50e6cb96cc3b3",
@@ -169,6 +137,111 @@
         "x": 14,
         "y": 379,
         "w": 832,
+        "h": 202
+    },
+    {
+        "id": "bf7019fa94e27678",
+        "type": "group",
+        "z": "06c72d44e5729b2a",
+        "name": "wt: chunk job from division",
+        "style": {
+            "label": true,
+            "stroke": "none",
+            "fill": "#c8e7a7",
+            "fill-opacity": "0.5",
+            "color": "#ff3f3f"
+        },
+        "nodes": [
+            "d18b39342c8a59d3",
+            "61a97b32b17dbf53",
+            "da91dddbdc52b6b0",
+            "e5902ab2e5a442ed",
+            "dcab231f242dffc6",
+            "f837821d76ab526d",
+            "074f12192bc2b669"
+        ],
+        "x": 34,
+        "y": 339,
+        "w": 732,
+        "h": 202
+    },
+    {
+        "id": "675a034d3ec876e6",
+        "type": "group",
+        "z": "06c72d44e5729b2a",
+        "name": "wt: filter longlat by block and chunk ",
+        "style": {
+            "label": true,
+            "stroke": "none",
+            "fill": "#c8e7a7",
+            "fill-opacity": "0.48",
+            "color": "#ff3f3f"
+        },
+        "nodes": [
+            "ba3d896fdaf8eaeb",
+            "b387dc3b8e3ba31b",
+            "e24a92cbea2dda17",
+            "e37bbc66e56dd4ba",
+            "6af606d2c8e820c3",
+            "8ab2f8087937a815",
+            "20cfbbe2cba42572"
+        ],
+        "x": 34,
+        "y": 599,
+        "w": 712,
+        "h": 202
+    },
+    {
+        "id": "8913e09cb6434789",
+        "type": "group",
+        "z": "06c72d44e5729b2a",
+        "name": "wt: load chunk and filter longlat by trees inside block",
+        "style": {
+            "label": true,
+            "stroke": "none",
+            "fill": "#c8e7a7",
+            "fill-opacity": "0.48",
+            "color": "#ff3f3f"
+        },
+        "nodes": [
+            "b765932bf69d2d0f",
+            "2da97027bd0d7c7a",
+            "5c21ea28c38aab09",
+            "c9e177305f909c86",
+            "c3ba33ccf69567cd",
+            "85c63351f4dbcb6a",
+            "c89e45c73f0511d6",
+            "2fc4962bc9f4b887",
+            "4b898ccf9f8a0eaa"
+        ],
+        "x": 34,
+        "y": 859,
+        "w": 732,
+        "h": 242
+    },
+    {
+        "id": "96db80cb3d51c6c6",
+        "type": "group",
+        "z": "06c72d44e5729b2a",
+        "name": "wt: geofencing and create transaction",
+        "style": {
+            "stroke": "none",
+            "fill": "#c8e7a7",
+            "fill-opacity": "0.45",
+            "label": true,
+            "color": "#ff3f3f"
+        },
+        "nodes": [
+            "996035da1afdd16a",
+            "909f0bae520fb673",
+            "d821f6f9cad4c1e3",
+            "3e4daddff5e5ad16",
+            "c31749368d55472c",
+            "81a6112a04ada68d"
+        ],
+        "x": 34,
+        "y": 1159,
+        "w": 652,
         "h": 202
     },
     {
@@ -398,31 +471,13 @@
         "finalize": "",
         "libs": [],
         "x": 220,
-        "y": 240,
+        "y": 220,
         "wires": [
             [
                 "03e630b763e1fad0"
             ]
         ],
         "icon": "font-awesome/fa-qrcode"
-    },
-    {
-        "id": "d18b39342c8a59d3",
-        "type": "amqp in",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "topic": "",
-        "iotype": "4",
-        "ioname": "wt.tracking.filterby.division",
-        "server": "a71ab4cd6eb395c0",
-        "x": 190,
-        "y": 380,
-        "wires": [
-            [
-                "61a97b32b17dbf53"
-            ]
-        ]
     },
     {
         "id": "8f24af074f1a443c",
@@ -438,7 +493,7 @@
         "finalize": "",
         "libs": [],
         "x": 180,
-        "y": 200,
+        "y": 180,
         "wires": [
             [
                 "03e630b763e1fad0",
@@ -458,166 +513,8 @@
         "ioname": "wt.tracking.filterby.division",
         "server": "70620c4aa929b5d8",
         "x": 650,
-        "y": 260,
+        "y": 240,
         "wires": []
-    },
-    {
-        "id": "61a97b32b17dbf53",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "get block geojson",
-        "func": "const couchdb = global.get('couchdb');\nlet { date, ident, area, tracking } = msg.payload;\nlet { psm, estate, division } = area;\n\ncouchdb.view('smart-geojson', 'block', 'geo-by-division', {\n    key: [psm, estate, division]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(block => {\n        node.send({ date, ident, tracking, block });\n    });\n}, (err) => {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n})\nreturn null;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 210,
-        "y": 420,
-        "wires": [
-            [
-                "da91dddbdc52b6b0"
-            ]
-        ]
-    },
-    {
-        "id": "b387dc3b8e3ba31b",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "send to worker",
-        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking, block } = msg.payload;\n\n    // Send a message to the worker thread\n    worker.postMessage({\n        func: 'checkLocationsInPloygon',\n        payload: {\n            locations: tracking,\n            geojson: block\n        }\n    });\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        let { area, tracking } = result.data;\n        if (Array.isArray(tracking) && tracking.length > 0) {\n            node.send({\n                payload: {\n                    date,\n                    ident,\n                    area,\n                    tracking\n                }\n            });\n        }\n    });\n\n    worker.on('error', (err) => {\n        worker.terminate();\n        node.send({\n            payload: msg.payload,\n            error: err\n        })\n    });\n} catch (err) {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n}",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 220,
-        "y": 640,
-        "wires": [
-            [
-                "e24a92cbea2dda17"
-            ]
-        ],
-        "icon": "font-awesome/fa-qrcode"
-    },
-    {
-        "id": "b765932bf69d2d0f",
-        "type": "amqp in",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "topic": "",
-        "iotype": "4",
-        "ioname": "wt.tracking.filterby.block",
-        "server": "317dcd65d78d7168",
-        "x": 190,
-        "y": 840,
-        "wires": [
-            [
-                "2da97027bd0d7c7a"
-            ]
-        ]
-    },
-    {
-        "id": "2da97027bd0d7c7a",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "get tree geojson",
-        "func": "const couchdb = global.get('couchdb');\nlet { date, ident, area } = msg.payload;\nlet { psm, estate, division, block } = area;\n\ncouchdb.view('smart-geojson', 'tree', 'geo-by-block', {\n    key: [psm, estate, division, block]\n}).then(res => {\n    msg.geoTree = res.data.rows?.map(x => x.value);\n    node.send(msg);\n}, (err) => {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n});",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 220,
-        "y": 880,
-        "wires": [
-            [
-                "5c21ea28c38aab09",
-                "c9e177305f909c86"
-            ]
-        ]
-    },
-    {
-        "id": "5c21ea28c38aab09",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "send to worker",
-        "func": "try {\n    if (msg.error == undefined) {\n        let w = global.get('worker');\n        let worker = new w.Worker('./workers/w-geo.js');\n        let { date, ident, tracking } = msg.payload;\n        let geoTree = msg.geoTree;\n\n        worker.on('message', (result) => {\n            worker.terminate();\n            if (result.data && Array.isArray(result.data.inrange) && result.data.inrange.length > 0) {\n                node.send({\n                    payload: {\n                        date,\n                        ident,\n                        geofencing: result.data\n                    }\n                });\n            }\n        });\n        worker.on('error', (err) => {\n            worker.terminate();\n            node.send({\n                payload: msg.payload,\n                error: err\n            })\n        })\n\n        // Send a message to the worker thread\n        if (Array.isArray(geoTree) && geoTree.length > 0) {\n            worker.postMessage({\n                func: 'distance',\n                payload: {\n                    locations: tracking,\n                    geojson: geoTree,\n                    distance: 4\n                }\n            });\n        }\n        return null;\n    }\n} catch (err) {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n}",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 220,
-        "y": 920,
-        "wires": [
-            [
-                "c9e177305f909c86"
-            ]
-        ],
-        "icon": "font-awesome/fa-qrcode"
-    },
-    {
-        "id": "4b898ccf9f8a0eaa",
-        "type": "amqp out",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "routingkey": "",
-        "iotype": "4",
-        "ioname": "wt.transaction",
-        "server": "70620c4aa929b5d8",
-        "x": 620,
-        "y": 1000,
-        "wires": []
-    },
-    {
-        "id": "996035da1afdd16a",
-        "type": "amqp in",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "topic": "",
-        "iotype": "4",
-        "ioname": "wt.transaction",
-        "server": "5c5f4a38e92ed986",
-        "x": 220,
-        "y": 1100,
-        "wires": [
-            [
-                "909f0bae520fb673"
-            ]
-        ]
-    },
-    {
-        "id": "909f0bae520fb673",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "create transactions",
-        "func": "let ori = msg.payload;\ntry {\n    const couchdb = global.get('couchdb');\n\n    let { date, ident, geofencing } = msg.payload;\n    let [nik, device, imei] = ident;\n    couchdb.view('transactions', 'filter', 'by-harvester-date', {\n        key: [ident[0], date]\n    }).then(res => {\n        let rs = res.data.rows?.map(x => x.value);\n        geofencing.forEach(geof => {\n            let { psm, estate, division, block, tree, timestamp, event } = geof;\n            let transaction = rs.find(x => x.treeID == tree);\n            let isHarvested = Number(event) > 0;\n            if (!transaction) {\n                rs.push({\n                    treeID: tree,\n                    psm: psm,\n                    estate: estate,\n                    division: division,\n                    block: block,\n                    harvester: nik,\n                    harvested: Number(event),\n                    lastHarvested: (isHarvested) ? new Date(timestamp) : null,\n                    visited: 1,\n                    lastVisited: new Date(timestamp),\n                    createdBy: \"system\",\n                    createdDate: new Date(),\n                    modifiedBy: \"system\",\n                    modifiedDate: new Date(),\n                });\n            } else {\n                if (isHarvested) {\n                    transaction.harvested += Number(event);\n                    transaction.lastHarvested = new Date(timestamp);\n                }\n                transaction.visited++;\n            }\n        });\n\n        couchdb.bulk('transactions', rs).then(res => {\n            node.send({\n                payload: res.data\n            });\n        }, (err) => {\n            node.send({\n                payload: ori,\n                error: err\n            })\n        });\n        node.send(msg);\n    }, (err) => {\n        node.send({\n            payload: ori,\n            error: err\n        })\n    });\n} catch (err) {\n    node.send({\n        payload: ori,\n        error: err\n    })\n}",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 210,
-        "y": 1140,
-        "wires": [
-            [
-                "d821f6f9cad4c1e3"
-            ]
-        ]
     },
     {
         "id": "73952f098b8ed22c",
@@ -630,152 +527,10 @@
         "ioname": "wt.tracking.perdevice",
         "server": "60b254c433dfc6f4",
         "x": 200,
-        "y": 160,
+        "y": 140,
         "wires": [
             [
                 "8f24af074f1a443c"
-            ]
-        ]
-    },
-    {
-        "id": "f837821d76ab526d",
-        "type": "amqp out",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "routingkey": "",
-        "iotype": "4",
-        "ioname": "wt.tracking.send.block",
-        "server": "70620c4aa929b5d8",
-        "x": 640,
-        "y": 480,
-        "wires": []
-    },
-    {
-        "id": "ba3d896fdaf8eaeb",
-        "type": "amqp in",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "topic": "",
-        "iotype": "4",
-        "ioname": "wt.tracking.send.block",
-        "server": "5c5f4a38e92ed986",
-        "x": 200,
-        "y": 600,
-        "wires": [
-            [
-                "b387dc3b8e3ba31b"
-            ]
-        ]
-    },
-    {
-        "id": "f125be1c760a4dd2",
-        "type": "comment",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "info": "## wt.tracking.perdevice\n1 message / 30 seconds\n\n## wt.tracking.filterby.division\n1 message / 5 seconds\n\n## wt.tracking.send.block\n1 message / 3 seconds\n\n## wt.tracking.filterby.block\n1 message / 15 seconds\n\n## wt.tracking.filterby.block\n1 message / 15 second\n\n",
-        "x": 120,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "c89e45c73f0511d6",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "select inrange",
-        "func": "let { date, ident, geofencing } = msg.payload\ngeofencing = geofencing.inrange\nnode.send({ date, ident, geofencing });\nreturn null;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 620,
-        "y": 960,
-        "wires": [
-            [
-                "4b898ccf9f8a0eaa"
-            ]
-        ]
-    },
-    {
-        "id": "d821f6f9cad4c1e3",
-        "type": "switch",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "error ? ",
-        "property": "payload.error",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nnull"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 430,
-        "y": 1140,
-        "wires": [
-            [
-                "3e4daddff5e5ad16",
-                "c31749368d55472c"
-            ]
-        ]
-    },
-    {
-        "id": "3e4daddff5e5ad16",
-        "type": "debug",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "error",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 600,
-        "y": 1140,
-        "wires": []
-    },
-    {
-        "id": "81a6112a04ada68d",
-        "type": "amqp out",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "routingkey": "",
-        "iotype": "4",
-        "ioname": "wt.transaction",
-        "server": "70620c4aa929b5d8",
-        "x": 620,
-        "y": 1220,
-        "wires": []
-    },
-    {
-        "id": "c31749368d55472c",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "send back payload",
-        "func": "let {payload} = msg.payload;\nmsg.payload = payload;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 630,
-        "y": 1180,
-        "wires": [
-            [
-                "81a6112a04ada68d"
             ]
         ]
     },
@@ -799,7 +554,7 @@
         "repair": false,
         "outputs": 2,
         "x": 410,
-        "y": 200,
+        "y": 180,
         "wires": [
             [
                 "8355d6c2d3494ee7",
@@ -825,7 +580,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 600,
-        "y": 140,
+        "y": 120,
         "wires": []
     },
     {
@@ -839,7 +594,7 @@
         "ioname": "wt.tracking.perdevice",
         "server": "70620c4aa929b5d8",
         "x": 640,
-        "y": 220,
+        "y": 200,
         "wires": []
     },
     {
@@ -856,7 +611,7 @@
         "finalize": "",
         "libs": [],
         "x": 630,
-        "y": 180,
+        "y": 160,
         "wires": [
             [
                 "e7dcaf026846bb1c"
@@ -864,10 +619,90 @@
         ]
     },
     {
+        "id": "87d68a8c119fefa3",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "name": "pra-trans",
+        "func": "msg.sub = {\n    database: 'pra-trans',\n    doc: msg.payload\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 1200,
+        "wires": [
+            [
+                "f602804499675a85"
+            ]
+        ]
+    },
+    {
+        "id": "f602804499675a85",
+        "type": "subflow:ef0e7b589320b81a",
+        "z": "06c72d44e5729b2a",
+        "name": "",
+        "x": 810,
+        "y": 1240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f125be1c760a4dd2",
+        "type": "comment",
+        "z": "06c72d44e5729b2a",
+        "name": "",
+        "info": "## wt.tracking.perdevice\n1 message / 30 seconds\n\n## wt.tracking.filterby.division\n1 message / 5 seconds\n\n## wt.tracking.send.block\n1 message / 3 seconds\n\n## wt.tracking.filterby.block\n1 message / 15 seconds\n\n## wt.tracking.filterby.block\n1 message / 15 second\n\n",
+        "x": 100,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "d18b39342c8a59d3",
+        "type": "amqp in",
+        "z": "06c72d44e5729b2a",
+        "g": "bf7019fa94e27678",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.filterby.division",
+        "server": "a71ab4cd6eb395c0",
+        "x": 170,
+        "y": 400,
+        "wires": [
+            [
+                "61a97b32b17dbf53"
+            ]
+        ]
+    },
+    {
+        "id": "61a97b32b17dbf53",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "bf7019fa94e27678",
+        "name": "get block geojson",
+        "func": "const couchdb = global.get('couchdb');\nlet { date, ident, area, tracking } = msg.payload;\nlet { psm, estate, division } = area;\n\ncouchdb.view('smart-geojson', 'block', 'geo-by-division', {\n    key: [psm, estate, division]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(block => {\n        node.send({ date, ident, tracking, block });\n    });\n}, (err) => {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n})\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 440,
+        "wires": [
+            [
+                "da91dddbdc52b6b0"
+            ]
+        ]
+    },
+    {
         "id": "da91dddbdc52b6b0",
         "type": "switch",
         "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
+        "g": "bf7019fa94e27678",
         "name": "error ? ",
         "property": "payload.error",
         "propertyType": "msg",
@@ -882,8 +717,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 410,
-        "y": 420,
+        "x": 390,
+        "y": 440,
         "wires": [
             [
                 "e5902ab2e5a442ed",
@@ -898,7 +733,7 @@
         "id": "e5902ab2e5a442ed",
         "type": "debug",
         "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
+        "g": "bf7019fa94e27678",
         "name": "debug 6",
         "active": true,
         "tosidebar": true,
@@ -908,29 +743,15 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 600,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "074f12192bc2b669",
-        "type": "amqp out",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "routingkey": "",
-        "iotype": "4",
-        "ioname": "wt.tracking.filterby.division",
-        "server": "70620c4aa929b5d8",
-        "x": 650,
-        "y": 440,
+        "x": 580,
+        "y": 380,
         "wires": []
     },
     {
         "id": "dcab231f242dffc6",
         "type": "function",
         "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
+        "g": "bf7019fa94e27678",
         "name": "send back payload",
         "func": "let {payload} = msg.payload;\nmsg.payload = payload;\nreturn msg;",
         "outputs": 1,
@@ -939,8 +760,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 630,
-        "y": 400,
+        "x": 610,
+        "y": 420,
         "wires": [
             [
                 "074f12192bc2b669"
@@ -948,10 +769,78 @@
         ]
     },
     {
+        "id": "f837821d76ab526d",
+        "type": "amqp out",
+        "z": "06c72d44e5729b2a",
+        "g": "bf7019fa94e27678",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.send.block",
+        "server": "70620c4aa929b5d8",
+        "x": 620,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "074f12192bc2b669",
+        "type": "amqp out",
+        "z": "06c72d44e5729b2a",
+        "g": "bf7019fa94e27678",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.filterby.division",
+        "server": "70620c4aa929b5d8",
+        "x": 630,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "ba3d896fdaf8eaeb",
+        "type": "amqp in",
+        "z": "06c72d44e5729b2a",
+        "g": "675a034d3ec876e6",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.send.block",
+        "server": "5c5f4a38e92ed986",
+        "x": 160,
+        "y": 660,
+        "wires": [
+            [
+                "b387dc3b8e3ba31b"
+            ]
+        ]
+    },
+    {
+        "id": "b387dc3b8e3ba31b",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "675a034d3ec876e6",
+        "name": "send to worker",
+        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking, block } = msg.payload;\n\n    // Send a message to the worker thread\n    worker.postMessage({\n        func: 'checkLocationsInPloygon',\n        payload: {\n            locations: tracking,\n            geojson: block\n        }\n    });\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        let { area, tracking } = result.data;\n        if (Array.isArray(tracking) && tracking.length > 0) {\n            node.send({\n                payload: {\n                    date,\n                    ident,\n                    area,\n                    tracking\n                }\n            });\n        }\n    });\n\n    worker.on('error', (err) => {\n        worker.terminate();\n        node.send({\n            payload: msg.payload,\n            error: err\n        })\n    });\n} catch (err) {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 700,
+        "wires": [
+            [
+                "e24a92cbea2dda17"
+            ]
+        ],
+        "icon": "font-awesome/fa-qrcode"
+    },
+    {
         "id": "e24a92cbea2dda17",
         "type": "switch",
         "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
+        "g": "675a034d3ec876e6",
         "name": "error ? ",
         "property": "payload.error",
         "propertyType": "msg",
@@ -966,8 +855,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 410,
-        "y": 640,
+        "x": 370,
+        "y": 700,
         "wires": [
             [
                 "e37bbc66e56dd4ba",
@@ -982,7 +871,7 @@
         "id": "e37bbc66e56dd4ba",
         "type": "debug",
         "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
+        "g": "675a034d3ec876e6",
         "name": "debug 7",
         "active": true,
         "tosidebar": true,
@@ -992,29 +881,15 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 600,
-        "y": 580,
-        "wires": []
-    },
-    {
-        "id": "20cfbbe2cba42572",
-        "type": "amqp out",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "routingkey": "",
-        "iotype": "4",
-        "ioname": "wt.tracking.send.block",
-        "server": "70620c4aa929b5d8",
-        "x": 640,
-        "y": 660,
+        "x": 560,
+        "y": 640,
         "wires": []
     },
     {
         "id": "6af606d2c8e820c3",
         "type": "function",
         "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
+        "g": "675a034d3ec876e6",
         "name": "send back payload",
         "func": "let {payload} = msg.payload;\nmsg.payload = payload;\nreturn msg;",
         "outputs": 1,
@@ -1023,8 +898,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 630,
-        "y": 620,
+        "x": 590,
+        "y": 680,
         "wires": [
             [
                 "20cfbbe2cba42572"
@@ -1035,52 +910,97 @@
         "id": "8ab2f8087937a815",
         "type": "amqp out",
         "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
+        "g": "675a034d3ec876e6",
         "name": "",
         "routingkey": "",
         "iotype": "4",
         "ioname": "wt.tracking.filterby.block",
         "server": "70620c4aa929b5d8",
-        "x": 650,
-        "y": 700,
+        "x": 610,
+        "y": 760,
         "wires": []
     },
     {
-        "id": "87d68a8c119fefa3",
+        "id": "20cfbbe2cba42572",
+        "type": "amqp out",
+        "z": "06c72d44e5729b2a",
+        "g": "675a034d3ec876e6",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.send.block",
+        "server": "70620c4aa929b5d8",
+        "x": 600,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "b765932bf69d2d0f",
+        "type": "amqp in",
+        "z": "06c72d44e5729b2a",
+        "g": "8913e09cb6434789",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.filterby.block",
+        "server": "317dcd65d78d7168",
+        "x": 170,
+        "y": 900,
+        "wires": [
+            [
+                "2da97027bd0d7c7a"
+            ]
+        ]
+    },
+    {
+        "id": "2da97027bd0d7c7a",
         "type": "function",
         "z": "06c72d44e5729b2a",
-        "name": "pra-trans",
-        "func": "msg.sub = {\n    database: 'pra-trans',\n    doc: msg.payload\n}\nreturn msg;",
+        "g": "8913e09cb6434789",
+        "name": "get tree geojson",
+        "func": "const couchdb = global.get('couchdb');\nlet { date, ident, area } = msg.payload;\nlet { psm, estate, division, block } = area;\n\ncouchdb.view('smart-geojson', 'tree', 'geo-by-block', {\n    key: [psm, estate, division, block]\n}).then(res => {\n    msg.geoTree = res.data.rows?.map(x => x.value);\n    node.send(msg);\n}, (err) => {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n});",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 920,
-        "y": 960,
+        "x": 200,
+        "y": 940,
         "wires": [
             [
-                "f602804499675a85"
+                "5c21ea28c38aab09",
+                "c9e177305f909c86"
             ]
         ]
     },
     {
-        "id": "f602804499675a85",
-        "type": "subflow:ef0e7b589320b81a",
+        "id": "5c21ea28c38aab09",
+        "type": "function",
         "z": "06c72d44e5729b2a",
-        "name": "",
-        "x": 950,
-        "y": 1000,
+        "g": "8913e09cb6434789",
+        "name": "send to worker",
+        "func": "try {\n    if (msg.error == undefined) {\n        let w = global.get('worker');\n        let worker = new w.Worker('./workers/w-geo.js');\n        let { date, ident, tracking } = msg.payload;\n        let geoTree = msg.geoTree;\n\n        worker.on('message', (result) => {\n            worker.terminate();\n            if (result.data && Array.isArray(result.data.inrange) && result.data.inrange.length > 0) {\n                node.send({\n                    payload: {\n                        date,\n                        ident,\n                        geofencing: result.data\n                    }\n                });\n            }\n        });\n        worker.on('error', (err) => {\n            worker.terminate();\n            node.send({\n                payload: msg.payload,\n                error: err\n            })\n        })\n\n        // Send a message to the worker thread\n        if (Array.isArray(geoTree) && geoTree.length > 0) {\n            worker.postMessage({\n                func: 'distance',\n                payload: {\n                    locations: tracking,\n                    geojson: geoTree,\n                    distance: 4\n                }\n            });\n        }\n        return null;\n    }\n} catch (err) {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 980,
         "wires": [
-            []
-        ]
+            [
+                "c9e177305f909c86"
+            ]
+        ],
+        "icon": "font-awesome/fa-qrcode"
     },
     {
         "id": "c9e177305f909c86",
         "type": "switch",
         "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
+        "g": "8913e09cb6434789",
         "name": "error ? ",
         "property": "payload.error",
         "propertyType": "msg",
@@ -1095,8 +1015,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 410,
-        "y": 900,
+        "x": 390,
+        "y": 960,
         "wires": [
             [
                 "c3ba33ccf69567cd",
@@ -1111,7 +1031,7 @@
         "id": "c3ba33ccf69567cd",
         "type": "debug",
         "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
+        "g": "8913e09cb6434789",
         "name": "debug 8",
         "active": true,
         "tosidebar": true,
@@ -1121,29 +1041,15 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 600,
-        "y": 840,
-        "wires": []
-    },
-    {
-        "id": "2fc4962bc9f4b887",
-        "type": "amqp out",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "routingkey": "",
-        "iotype": "4",
-        "ioname": "wt.tracking.filterby.block",
-        "server": "70620c4aa929b5d8",
-        "x": 650,
-        "y": 920,
+        "x": 580,
+        "y": 900,
         "wires": []
     },
     {
         "id": "85c63351f4dbcb6a",
         "type": "function",
         "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
+        "g": "8913e09cb6434789",
         "name": "send back payload",
         "func": "let {payload} = msg.payload;\nmsg.payload = payload;\nreturn msg;",
         "outputs": 1,
@@ -1152,13 +1058,179 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 630,
-        "y": 880,
+        "x": 610,
+        "y": 940,
         "wires": [
             [
                 "2fc4962bc9f4b887"
             ]
         ]
+    },
+    {
+        "id": "c89e45c73f0511d6",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "8913e09cb6434789",
+        "name": "select inrange",
+        "func": "let { date, ident, geofencing } = msg.payload\ngeofencing = geofencing.inrange\nnode.send({ date, ident, geofencing });\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1020,
+        "wires": [
+            [
+                "4b898ccf9f8a0eaa"
+            ]
+        ]
+    },
+    {
+        "id": "2fc4962bc9f4b887",
+        "type": "amqp out",
+        "z": "06c72d44e5729b2a",
+        "g": "8913e09cb6434789",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.filterby.block",
+        "server": "70620c4aa929b5d8",
+        "x": 630,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "4b898ccf9f8a0eaa",
+        "type": "amqp out",
+        "z": "06c72d44e5729b2a",
+        "g": "8913e09cb6434789",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.transaction",
+        "server": "70620c4aa929b5d8",
+        "x": 600,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "996035da1afdd16a",
+        "type": "amqp in",
+        "z": "06c72d44e5729b2a",
+        "g": "96db80cb3d51c6c6",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.transaction",
+        "server": "5c5f4a38e92ed986",
+        "x": 160,
+        "y": 1200,
+        "wires": [
+            [
+                "909f0bae520fb673"
+            ]
+        ]
+    },
+    {
+        "id": "909f0bae520fb673",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "96db80cb3d51c6c6",
+        "name": "create transactions",
+        "func": "let ori = msg.payload;\ntry {\n    const couchdb = global.get('couchdb');\n\n    let { date, ident, geofencing } = msg.payload;\n    let [nik, device, imei] = ident;\n    couchdb.view('transactions', 'filter', 'by-harvester-date', {\n        key: [ident[0], date]\n    }).then(res => {\n        let rs = res.data.rows?.map(x => x.value);\n        geofencing.forEach(geof => {\n            let { psm, estate, division, block, tree, timestamp, event } = geof;\n            let transaction = rs.find(x => x.treeID == tree);\n            let isHarvested = Number(event) > 0;\n            if (!transaction) {\n                rs.push({\n                    treeID: tree,\n                    psm: psm,\n                    estate: estate,\n                    division: division,\n                    block: block,\n                    harvester: nik,\n                    harvested: Number(event),\n                    lastHarvested: (isHarvested) ? new Date(timestamp) : null,\n                    visited: 1,\n                    lastVisited: new Date(timestamp),\n                    createdBy: \"system\",\n                    createdDate: new Date(),\n                    modifiedBy: \"system\",\n                    modifiedDate: new Date(),\n                });\n            } else {\n                if (isHarvested) {\n                    transaction.harvested += Number(event);\n                    transaction.lastHarvested = new Date(timestamp);\n                }\n                transaction.visited++;\n            }\n        });\n\n        couchdb.bulk('transactions', rs).then(res => {\n            node.send({\n                payload: res.data\n            });\n        }, (err) => {\n            node.send({\n                payload: ori,\n                error: err\n            })\n        });\n        node.send(msg);\n    }, (err) => {\n        node.send({\n            payload: ori,\n            error: err\n        })\n    });\n} catch (err) {\n    node.send({\n        payload: ori,\n        error: err\n    })\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 1240,
+        "wires": [
+            [
+                "d821f6f9cad4c1e3"
+            ]
+        ]
+    },
+    {
+        "id": "d821f6f9cad4c1e3",
+        "type": "switch",
+        "z": "06c72d44e5729b2a",
+        "g": "96db80cb3d51c6c6",
+        "name": "error ? ",
+        "property": "payload.error",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 1240,
+        "wires": [
+            [
+                "3e4daddff5e5ad16",
+                "c31749368d55472c"
+            ]
+        ]
+    },
+    {
+        "id": "3e4daddff5e5ad16",
+        "type": "debug",
+        "z": "06c72d44e5729b2a",
+        "g": "96db80cb3d51c6c6",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "error",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "c31749368d55472c",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "96db80cb3d51c6c6",
+        "name": "send back payload",
+        "func": "let {payload} = msg.payload;\nmsg.payload = payload;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 1280,
+        "wires": [
+            [
+                "81a6112a04ada68d"
+            ]
+        ]
+    },
+    {
+        "id": "81a6112a04ada68d",
+        "type": "amqp out",
+        "z": "06c72d44e5729b2a",
+        "g": "96db80cb3d51c6c6",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.transaction",
+        "server": "70620c4aa929b5d8",
+        "x": 560,
+        "y": 1320,
+        "wires": []
     },
     {
         "id": "7caf168b939b9028",
