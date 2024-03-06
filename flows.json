@@ -60,14 +60,13 @@
         "id": "89ff6cae3b742adc",
         "type": "group",
         "z": "9ba7388927fccc31",
-        "name": "import from csv and save to timeseries",
+        "name": "wt: smarttimeseris to redistimeseries",
         "style": {
             "label": true,
             "fill": "#e3f3d3",
             "fill-opacity": "0.4",
             "color": "#ff0000",
-            "stroke": "none",
-            "label-position": "sw"
+            "stroke": "none"
         },
         "nodes": [
             "7caf168b939b9028",
@@ -76,16 +75,15 @@
             "e057ad1e131c55ee",
             "3fcc35deba3e1da9",
             "bafc0bcaf316df35",
-            "0337520c937b5a0c",
             "dce20e17ce373f6d",
             "55430bbd67084deb",
             "36bbf34f8f4ec2ac",
             "bd7d3d7fe33f261b"
         ],
         "x": 14,
-        "y": 39,
+        "y": 339,
         "w": 1072,
-        "h": 290
+        "h": 242
     },
     {
         "id": "9f1e98d4426d35e3",
@@ -135,7 +133,7 @@
             "d2ee66a5416bd52f"
         ],
         "x": 14,
-        "y": 379,
+        "y": 79,
         "w": 832,
         "h": 202
     },
@@ -1243,7 +1241,7 @@
         "ioname": "wt.smarttimeseries.to.redistimeseries",
         "server": "e907ba5364e5896f",
         "x": 190,
-        "y": 120,
+        "y": 380,
         "wires": [
             [
                 "bb6860a59623cd4b"
@@ -1264,7 +1262,7 @@
         "finalize": "",
         "libs": [],
         "x": 270,
-        "y": 160,
+        "y": 420,
         "wires": [
             [
                 "bafc0bcaf316df35"
@@ -1286,7 +1284,7 @@
         "finalize": "",
         "libs": [],
         "x": 530,
-        "y": 240,
+        "y": 500,
         "wires": [
             [
                 "e057ad1e131c55ee",
@@ -1309,7 +1307,7 @@
         "finalize": "",
         "libs": [],
         "x": 570,
-        "y": 280,
+        "y": 540,
         "wires": [
             [
                 "dce20e17ce373f6d"
@@ -1328,7 +1326,7 @@
         "ioname": "wt.series.chunk",
         "server": "56e870f2a20cabb0",
         "x": 260,
-        "y": 240,
+        "y": 500,
         "wires": [
             [
                 "f449ebb8cc8d7088"
@@ -1346,18 +1344,7 @@
         "ioname": "wt.series.chunk",
         "server": "70620c4aa929b5d8",
         "x": 480,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "0337520c937b5a0c",
-        "type": "comment",
-        "z": "9ba7388927fccc31",
-        "g": "89ff6cae3b742adc",
-        "name": "",
-        "info": "## wt.csv.import\n1 message / 5 seconds\n\n## wt.csv.import.chunk\n1 message / 10 seconds",
-        "x": 100,
-        "y": 80,
+        "y": 420,
         "wires": []
     },
     {
@@ -1371,7 +1358,7 @@
         "ioname": "wt.smartbucket.to.smarttimeseries",
         "server": "5471df75ac676292",
         "x": 180,
-        "y": 420,
+        "y": 120,
         "wires": [
             [
                 "dd42509446494f20"
@@ -1392,7 +1379,7 @@
         "finalize": "",
         "libs": [],
         "x": 250,
-        "y": 460,
+        "y": 160,
         "wires": [
             [
                 "248c25e4d88ba52f"
@@ -1416,7 +1403,7 @@
         "repair": false,
         "outputs": 1,
         "x": 430,
-        "y": 460,
+        "y": 160,
         "wires": [
             [
                 "c7bc8f0da817a8a1",
@@ -1439,7 +1426,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 600,
-        "y": 460,
+        "y": 160,
         "wires": []
     },
     {
@@ -1453,7 +1440,7 @@
         "ioname": "wt.smartbucket.to.smarttimeseries",
         "server": "70620c4aa929b5d8",
         "x": 680,
-        "y": 540,
+        "y": 240,
         "wires": []
     },
     {
@@ -1470,7 +1457,7 @@
         "finalize": "",
         "libs": [],
         "x": 630,
-        "y": 500,
+        "y": 200,
         "wires": [
             [
                 "1035dda52d64f81f"
@@ -1494,7 +1481,7 @@
         "repair": false,
         "outputs": 1,
         "x": 770,
-        "y": 240,
+        "y": 500,
         "wires": [
             [
                 "55430bbd67084deb",
@@ -1517,7 +1504,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 940,
-        "y": 200,
+        "y": 460,
         "wires": []
     },
     {
@@ -1531,7 +1518,7 @@
         "ioname": "wt.series.chunk",
         "server": "70620c4aa929b5d8",
         "x": 960,
-        "y": 280,
+        "y": 540,
         "wires": []
     },
     {
@@ -1548,11 +1535,21 @@
         "finalize": "",
         "libs": [],
         "x": 970,
-        "y": 240,
+        "y": 500,
         "wires": [
             [
                 "36bbf34f8f4ec2ac"
             ]
         ]
+    },
+    {
+        "id": "0337520c937b5a0c",
+        "type": "comment",
+        "z": "9ba7388927fccc31",
+        "name": "",
+        "info": "## wt.csv.import\n1 message / 5 seconds\n\n## wt.csv.import.chunk\n1 message / 10 seconds",
+        "x": 80,
+        "y": 40,
+        "wires": []
     }
 ]
