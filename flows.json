@@ -155,8 +155,7 @@
             "e5902ab2e5a442ed",
             "dcab231f242dffc6",
             "f837821d76ab526d",
-            "074f12192bc2b669",
-            "88184048cb3124a0"
+            "074f12192bc2b669"
         ],
         "x": 34,
         "y": 339,
@@ -485,7 +484,7 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "get SMSE divisions geojson",
-        "func": "const couchdb = global.get('couchdb');\ncouchdb.view('smart-geojson', 'division', 'geo-by-estate', {\n    key: ['PSM 2', \"SMSE\"]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(div => {\n        msg.geoDivision = div;\n        node.send(msg);\n    });\n}, (err) => {\n    node.warn(`err01. ${err}`);\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n})\nreturn null;",
+        "func": "const couchdb = global.get('couchdb');\ncouchdb.view('smart-geojson', 'division', 'geo-by-estate', {\n    key: ['PSM 2', \"SMSE\"]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(div => {\n        msg.geoDivision = div;\n        node.send(msg);\n    });\n}, (err) => {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n})\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -655,7 +654,7 @@
         "y": 400,
         "wires": [
             [
-                "88184048cb3124a0"
+                "61a97b32b17dbf53"
             ]
         ]
     },
@@ -1212,23 +1211,6 @@
         "server": "70620c4aa929b5d8",
         "x": 540,
         "y": 1400,
-        "wires": []
-    },
-    {
-        "id": "88184048cb3124a0",
-        "type": "debug",
-        "z": "06c72d44e5729b2a",
-        "g": "bf7019fa94e27678",
-        "name": "debug 10",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 380,
-        "y": 400,
         "wires": []
     },
     {
