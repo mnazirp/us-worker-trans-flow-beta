@@ -103,13 +103,12 @@
             "55ed1342d1fd4d9c",
             "73952f098b8ed22c",
             "03e630b763e1fad0",
-            "8355d6c2d3494ee7",
             "e7dcaf026846bb1c",
             "762ef0203613776d"
         ],
         "x": 34,
-        "y": 79,
-        "w": 752,
+        "y": 99,
+        "w": 732,
         "h": 202
     },
     {
@@ -156,7 +155,8 @@
             "e5902ab2e5a442ed",
             "dcab231f242dffc6",
             "f837821d76ab526d",
-            "074f12192bc2b669"
+            "074f12192bc2b669",
+            "88184048cb3124a0"
         ],
         "x": 34,
         "y": 339,
@@ -241,7 +241,7 @@
         ],
         "x": 34,
         "y": 1239,
-        "w": 652,
+        "w": 632,
         "h": 202
     },
     {
@@ -463,7 +463,7 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "send to worker",
-        "func": "try {\n    if (msg.error == undefined) {\n        let w = global.get('worker');\n        let worker = new w.Worker('./workers/w-geo.js');\n        let { date, series } = msg.payload;\n        let [ident, tracking] = series;\n\n        worker.on('message', (result) => {\n            worker.terminate();\n            let { area, tracking } = result.data;\n            if (Array.isArray(tracking) && tracking.length > 0) {\n                node.send({\n                    payload: { date, ident, area, tracking }\n                });\n            }\n        });\n        worker.on('error', (err) => {\n            worker.terminate();\n            node.send({\n                payload: msg.payload,\n                error: err\n            })\n        })\n\n        // Send a message to the worker thread\n        worker.postMessage({\n            func: 'checkLocationsInMultiPloygon',\n            payload: {\n                locations: tracking,\n                multiPolygon: msg.geoDivision\n            }\n        });\n    }\n} catch (err) {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n}",
+        "func": "try {\n    if (msg.error) {\n        node.send(msg);\n        return;\n    }\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, series } = msg.payload;\n    let [ident, tracking] = series;\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        let { area, tracking } = result.data;\n        if (Array.isArray(tracking) && tracking.length > 0) {\n            node.send({\n                payload: { date, ident, area, tracking }\n            });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        node.warn(`err03. ${err}`);\n        node.send({\n            payload: msg.payload,\n            error: err\n        })\n    })\n\n    // Send a message to the worker thread\n    worker.postMessage({\n        func: 'checkLocationsInMultiPloygon',\n        payload: {\n            locations: tracking,\n            multiPolygon: msg.geoDivision\n        }\n    });\n} catch (err) {\n    node.warn(`err02. ${err}`);\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -485,7 +485,7 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "get SMSE divisions geojson",
-        "func": "const couchdb = global.get('couchdb');\ncouchdb.view('smart-geojson', 'division', 'geo-by-estate', {\n    key: ['PSM 2', \"SMSE\"]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(div => {\n        msg.geoDivision = div;\n        node.send(msg);\n    });\n}, (err) => {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n})\nreturn null;",
+        "func": "const couchdb = global.get('couchdb');\ncouchdb.view('smart-geojson', 'division', 'geo-by-estate', {\n    key: ['PSM 2', \"SMSE\"]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(div => {\n        msg.geoDivision = div;\n        node.send(msg);\n    });\n}, (err) => {\n    node.warn(`err01. ${err}`);\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n})\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -496,7 +496,6 @@
         "y": 180,
         "wires": [
             [
-                "03e630b763e1fad0",
                 "e8c0683cc5f8df67"
             ]
         ],
@@ -512,8 +511,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.filterby.division",
         "server": "70620c4aa929b5d8",
-        "x": 650,
-        "y": 240,
+        "x": 630,
+        "y": 260,
         "wires": []
     },
     {
@@ -540,7 +539,7 @@
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
         "name": "error ? ",
-        "property": "payload.error",
+        "property": "error",
         "propertyType": "msg",
         "rules": [
             {
@@ -554,34 +553,15 @@
         "repair": false,
         "outputs": 2,
         "x": 410,
-        "y": 180,
+        "y": 220,
         "wires": [
             [
-                "8355d6c2d3494ee7",
                 "762ef0203613776d"
             ],
             [
                 "55ed1342d1fd4d9c"
             ]
         ]
-    },
-    {
-        "id": "8355d6c2d3494ee7",
-        "type": "debug",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "debug 5",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "error",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 600,
-        "y": 120,
-        "wires": []
     },
     {
         "id": "e7dcaf026846bb1c",
@@ -593,8 +573,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.perdevice",
         "server": "70620c4aa929b5d8",
-        "x": 640,
-        "y": 200,
+        "x": 620,
+        "y": 220,
         "wires": []
     },
     {
@@ -610,8 +590,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 630,
-        "y": 160,
+        "x": 610,
+        "y": 180,
         "wires": [
             [
                 "e7dcaf026846bb1c"
@@ -675,7 +655,7 @@
         "y": 400,
         "wires": [
             [
-                "61a97b32b17dbf53"
+                "88184048cb3124a0"
             ]
         ]
     },
@@ -706,7 +686,7 @@
         "z": "06c72d44e5729b2a",
         "g": "bf7019fa94e27678",
         "name": "error ? ",
-        "property": "payload.error",
+        "property": "error",
         "propertyType": "msg",
         "rules": [
             {
@@ -844,7 +824,7 @@
         "z": "06c72d44e5729b2a",
         "g": "675a034d3ec876e6",
         "name": "error ? ",
-        "property": "payload.error",
+        "property": "error",
         "propertyType": "msg",
         "rules": [
             {
@@ -971,8 +951,7 @@
         "y": 940,
         "wires": [
             [
-                "5c21ea28c38aab09",
-                "c9e177305f909c86"
+                "5c21ea28c38aab09"
             ]
         ]
     },
@@ -982,7 +961,7 @@
         "z": "06c72d44e5729b2a",
         "g": "8913e09cb6434789",
         "name": "send to worker",
-        "func": "try {\n    if (msg.error == undefined) {\n        let w = global.get('worker');\n        let worker = new w.Worker('./workers/w-geo.js');\n        let { date, ident, tracking } = msg.payload;\n        let geoTree = msg.geoTree;\n\n        worker.on('message', (result) => {\n            worker.terminate();\n            if (result.data && Array.isArray(result.data.inrange) && result.data.inrange.length > 0) {\n                node.send({\n                    payload: {\n                        date,\n                        ident,\n                        geofencing: result.data\n                    }\n                });\n            }\n        });\n        worker.on('error', (err) => {\n            worker.terminate();\n            node.send({\n                payload: msg.payload,\n                error: err\n            })\n        })\n\n        // Send a message to the worker thread\n        if (Array.isArray(geoTree) && geoTree.length > 0) {\n            worker.postMessage({\n                func: 'distance',\n                payload: {\n                    locations: tracking,\n                    geojson: geoTree,\n                    distance: 4\n                }\n            });\n        }\n        return null;\n    }\n} catch (err) {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n}",
+        "func": "try {\n    if (msg.error) {\n        node.send(msg);\n        return;\n    }\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking } = msg.payload;\n    let geoTree = msg.geoTree;\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        if (result.data && Array.isArray(result.data.inrange) && result.data.inrange.length > 0) {\n            node.send({\n                payload: {\n                    date,\n                    ident,\n                    geofencing: result.data\n                }\n            });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        node.send({\n            payload: msg.payload,\n            error: err\n        })\n    })\n\n    // Send a message to the worker thread\n    if (Array.isArray(geoTree) && geoTree.length > 0) {\n        worker.postMessage({\n            func: 'distance',\n            payload: {\n                locations: tracking,\n                geojson: geoTree,\n                distance: 4\n            }\n        });\n    }\n} catch (err) {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1004,7 +983,7 @@
         "z": "06c72d44e5729b2a",
         "g": "8913e09cb6434789",
         "name": "error ? ",
-        "property": "payload.error",
+        "property": "error",
         "propertyType": "msg",
         "rules": [
             {
@@ -1142,7 +1121,7 @@
         "z": "06c72d44e5729b2a",
         "g": "96db80cb3d51c6c6",
         "name": "create transactions",
-        "func": "let ori = msg.payload;\ntry {\n    const couchdb = global.get('couchdb');\n\n    let { date, ident, geofencing } = msg.payload;\n    let [nik, device, imei] = ident;\n    couchdb.view('transactions', 'filter', 'by-harvester-date', {\n        key: [ident[0], date]\n    }).then(res => {\n        let rs = res.data.rows?.map(x => x.value);\n        geofencing.forEach(geof => {\n            let { psm, estate, division, block, tree, timestamp, event } = geof;\n            let transaction = rs.find(x => x.treeID == tree);\n            let isHarvested = Number(event) > 0;\n            if (!transaction) {\n                rs.push({\n                    treeID: tree,\n                    psm: psm,\n                    estate: estate,\n                    division: division,\n                    block: block,\n                    harvester: nik,\n                    harvested: Number(event),\n                    lastHarvested: (isHarvested) ? new Date(timestamp) : null,\n                    visited: 1,\n                    lastVisited: new Date(timestamp),\n                    createdBy: \"system\",\n                    createdDate: new Date(),\n                    modifiedBy: \"system\",\n                    modifiedDate: new Date(),\n                });\n            } else {\n                if (isHarvested) {\n                    transaction.harvested += Number(event);\n                    transaction.lastHarvested = new Date(timestamp);\n                }\n                transaction.visited++;\n            }\n        });\n\n        couchdb.bulk('transactions', rs).then(res => {\n            node.send({\n                payload: res.data\n            });\n        }, (err) => {\n            node.send({\n                payload: ori,\n                error: err\n            })\n        });\n        node.send(msg);\n    }, (err) => {\n        node.send({\n            payload: ori,\n            error: err\n        })\n    });\n} catch (err) {\n    node.send({\n        payload: ori,\n        error: err\n    })\n}",
+        "func": "let ori = msg.payload;\ntry {\n    const couchdb = global.get('couchdb');\n\n    let { date, ident, geofencing } = msg.payload;\n    let [nik, device, imei] = ident;\n    couchdb.view('transactions', 'filter', 'by-harvester-date', {\n        key: [ident[0], date]\n    }).then(res => {\n        let rs = [];\n        let existing = res.data.rows?.map(x => x.value);\n        geofencing.forEach(geof => {\n            let { psm, estate, division, block, tree, timestamp, event } = geof;\n            let transaction = existing.find(x => x.treeID == tree);\n            let isHarvested = Number(event) > 0;\n            if (!transaction) {\n                rs.push({\n                    treeID: tree,\n                    psm: psm,\n                    estate: estate,\n                    division: division,\n                    block: block,\n                    harvester: nik,\n                    harvested: Number(event),\n                    lastHarvested: (isHarvested) ? new Date(timestamp) : null,\n                    visited: 1,\n                    lastVisited: new Date(timestamp),\n                    createdBy: \"system\",\n                    createdDate: new Date(),\n                    modifiedBy: \"system\",\n                    modifiedDate: new Date(),\n                });\n            } else {\n                if (isHarvested) {\n                    transaction.harvested += Number(event);\n                    transaction.lastHarvested = new Date(timestamp);\n                }\n                transaction.visited++;\n                rs.push(transaction);\n            }\n        });\n        couchdb.bulk('transactions', rs).then(res => {\n            node.send({\n                payload: res.data\n            });\n        }, (err) => {\n            node.send({\n                payload: ori,\n                error: err\n            })\n        });\n        node.send(msg);\n    }, (err) => {\n        node.send({\n            payload: ori,\n            error: err\n        })\n    });\n} catch (err) {\n    node.send({\n        payload: ori,\n        error: err\n    })\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1163,7 +1142,7 @@
         "z": "06c72d44e5729b2a",
         "g": "96db80cb3d51c6c6",
         "name": "error ? ",
-        "property": "payload.error",
+        "property": "error",
         "propertyType": "msg",
         "rules": [
             {
@@ -1173,7 +1152,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 370,
+        "x": 350,
         "y": 1320,
         "wires": [
             [
@@ -1196,7 +1175,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 540,
+        "x": 520,
         "y": 1320,
         "wires": []
     },
@@ -1213,7 +1192,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 570,
+        "x": 550,
         "y": 1360,
         "wires": [
             [
@@ -1231,8 +1210,25 @@
         "iotype": "4",
         "ioname": "wt.transaction",
         "server": "70620c4aa929b5d8",
-        "x": 560,
+        "x": 540,
         "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "88184048cb3124a0",
+        "type": "debug",
+        "z": "06c72d44e5729b2a",
+        "g": "bf7019fa94e27678",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 400,
         "wires": []
     },
     {
