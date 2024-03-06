@@ -1375,7 +1375,7 @@
         "z": "9ba7388927fccc31",
         "g": "48e7b095e8d92958",
         "name": "error ? ",
-        "property": "payload.error",
+        "property": "error",
         "propertyType": "msg",
         "rules": [
             {
@@ -1453,7 +1453,7 @@
         "z": "9ba7388927fccc31",
         "g": "89ff6cae3b742adc",
         "name": "error ? ",
-        "property": "payload.error",
+        "property": "error",
         "propertyType": "msg",
         "rules": [
             {
