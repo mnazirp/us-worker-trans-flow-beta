@@ -1,16 +1,4 @@
 {
-    "60b254c433dfc6f4": {
-        "user": "admin",
-        "password": "password"
-    },
-    "a71ab4cd6eb395c0": {
-        "user": "admin",
-        "password": "password"
-    },
-    "317dcd65d78d7168": {
-        "user": "admin",
-        "password": "password"
-    },
     "e907ba5364e5896f": {
         "user": "admin",
         "password": "password"
@@ -23,11 +11,31 @@
         "user": "admin",
         "password": "password"
     },
-    "5c5f4a38e92ed986": {
+    "5471df75ac676292": {
         "user": "admin",
         "password": "password"
     },
-    "5471df75ac676292": {
+    "0a8b482f55e0592d": {
+        "user": "admin",
+        "password": "password"
+    },
+    "8dad4b74fb298592": {
+        "user": "admin",
+        "password": "password"
+    },
+    "f7b36a35cf0d6417": {
+        "user": "admin",
+        "password": "password"
+    },
+    "7a8729d72f970b40": {
+        "user": "admin",
+        "password": "password"
+    },
+    "94497583e5725ee2": {
+        "user": "admin",
+        "password": "password"
+    },
+    "73a503547a572f1b": {
         "user": "admin",
         "password": "password"
     }
