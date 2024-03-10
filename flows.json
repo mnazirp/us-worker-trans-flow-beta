@@ -98,21 +98,19 @@
             "fill-opacity": "0.5"
         },
         "nodes": [
-            "e8c0683cc5f8df67",
             "8f24af074f1a443c",
             "73952f098b8ed22c",
             "bfe3ce28f29a69ae",
-            "7bc55cf847260a66",
             "c2af8c09210a4097",
             "a682597d72837a54",
-            "dfc98af8f801f8b3",
-            "89a5b43359f7baa0",
             "19bc5810b2b9aee7",
-            "7ab4d9e9b22d944d"
+            "036aac412f2ada03",
+            "7461788f7573e617",
+            "7bc55cf847260a66"
         ],
         "x": 34,
         "y": 39,
-        "w": 872,
+        "w": 1212,
         "h": 242
     },
     {
@@ -165,7 +163,7 @@
             "aaf76430a76d8abc"
         ],
         "x": 34,
-        "y": 319,
+        "y": 579,
         "w": 792,
         "h": 242
     },
@@ -193,7 +191,7 @@
             "bafc614fbcb82f02"
         ],
         "x": 34,
-        "y": 599,
+        "y": 859,
         "w": 992,
         "h": 182
     },
@@ -220,7 +218,7 @@
             "32bb7db17bf0aae4"
         ],
         "x": 34,
-        "y": 819,
+        "y": 1079,
         "w": 952,
         "h": 142
     },
@@ -247,7 +245,7 @@
             "7470e87bc569f9a8"
         ],
         "x": 34,
-        "y": 999,
+        "y": 1259,
         "w": 892,
         "h": 142
     },
@@ -503,46 +501,23 @@
         ]
     },
     {
-        "id": "e8c0683cc5f8df67",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "send to worker",
-        "func": "try {\n    if (msg.error) {\n        node.send(msg);\n        return;\n    }\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, series } = msg.payload;\n    let [ident, tracking] = series;\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        let { area, tracking } = result.data;\n        if (Array.isArray(tracking) && tracking.length > 0) {\n            node.send({\n                payload: { date, ident, area, tracking }\n            });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        node.error({ segment: 'tracking.perdevice', err });\n    })\n\n    worker.postMessage({\n        func: 'checkLocationsInMultiPloygon',\n        payload: {\n            locations: tracking,\n            multiPolygon: msg.geoDivision\n        }\n    });\n} catch (err) {\n    node.error({ segment: 'tracking.perdevice', err });\n}",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 520,
-        "y": 240,
-        "wires": [
-            [
-                "7bc55cf847260a66"
-            ]
-        ],
-        "icon": "font-awesome/fa-qrcode"
-    },
-    {
         "id": "8f24af074f1a443c",
         "type": "function",
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
-        "name": "get SMSE divisions geojson >> foreach",
-        "func": "const couchdb = global.get('couchdb');\nlet ori = msg;\nlet payload = msg.payload;\ntry {\n    couchdb.view('smart-geojson', 'division', 'geo-by-estate', {\n        key: ['PSM 2', \"SMSE\"]\n    }).then(res => {\n        res.data.rows.map(x => x.value).forEach(div => {\n            node.send({\n                payload,\n                geoDivision: div\n            });\n        });\n        node.send({ ack: true, ...ori }); /**acknowledge */\n    }, (err) => {\n        node.error({ segment: 'tracking.perdevice', err });\n        node.send({\n            ack: false,\n            ori,\n            error: err,\n        })\n    })\n} catch (err) {\n    node.error({ segment: 'tracking.perdevice', err });\n    node.send({\n        ack: false,\n        ori,\n        error: err,\n    })\n}",
+        "name": "get SMSE divisions geojson",
+        "func": "const couchdb = global.get('couchdb');\nlet ori = msg;\ntry {\n    couchdb.view('smart-geojson', 'division', 'geo-by-estate', {\n        key: ['PSM 2', \"SMSE\"]\n    }).then(res => {\n        let geoDivisions = res.data.rows.map(x => x.value);\n        node.send({ geoDivisions, ack: true, ...ori }); /**acknowledge */\n    }, (err) => {\n        node.error({ segment: 'tracking.perdevice', err });\n        node.send({\n            ack: false,\n            error: err,\n            ...ori,\n        })\n    })\n} catch (err) {\n    node.error({ segment: 'tracking.perdevice', err });\n    node.send({\n        ack: false,\n        error: err,\n        ...ori,\n    })\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 220,
-        "y": 160,
+        "x": 440,
+        "y": 120,
         "wires": [
             [
-                "c2af8c09210a4097",
-                "89a5b43359f7baa0"
+                "c2af8c09210a4097"
             ]
         ],
         "icon": "font-awesome/fa-code-fork"
@@ -569,6 +544,7 @@
         "id": "d18b39342c8a59d3",
         "type": "amqp in",
         "z": "06c72d44e5729b2a",
+        "d": true,
         "g": "bf7019fa94e27678",
         "name": "",
         "topic": "",
@@ -576,7 +552,7 @@
         "ioname": "wt.tracking.filterby.division",
         "server": "8dad4b74fb298592",
         "x": 170,
-        "y": 360,
+        "y": 620,
         "wires": [
             [
                 "ba50707f8350607b"
@@ -597,7 +573,7 @@
         "finalize": "",
         "libs": [],
         "x": 180,
-        "y": 440,
+        "y": 700,
         "wires": [
             [
                 "4a5542470e78ff1f",
@@ -617,7 +593,7 @@
         "ioname": "wt.tracking.filterby.block",
         "server": "7a8729d72f970b40",
         "x": 170,
-        "y": 640,
+        "y": 900,
         "wires": [
             [
                 "62a7d89a51841542"
@@ -638,7 +614,7 @@
         "finalize": "",
         "libs": [],
         "x": 440,
-        "y": 660,
+        "y": 920,
         "wires": [
             [
                 "bafc614fbcb82f02"
@@ -657,7 +633,7 @@
         "ioname": "wt.tracking.filterby.tree",
         "server": "94497583e5725ee2",
         "x": 160,
-        "y": 860,
+        "y": 1120,
         "wires": [
             [
                 "9650f01883ca82d9"
@@ -678,7 +654,7 @@
         "finalize": "",
         "libs": [],
         "x": 420,
-        "y": 860,
+        "y": 1120,
         "wires": [
             [
                 "084f166599dd9ab2"
@@ -698,7 +674,7 @@
         "ioname": "wt.transaction",
         "server": "73a503547a572f1b",
         "x": 140,
-        "y": 1040,
+        "y": 1300,
         "wires": [
             [
                 "652a4d3ed7d3a711"
@@ -719,7 +695,7 @@
         "finalize": "",
         "libs": [],
         "x": 390,
-        "y": 1040,
+        "y": 1300,
         "wires": [
             [
                 "d821f6f9cad4c1e3"
@@ -746,7 +722,7 @@
         "repair": false,
         "outputs": 2,
         "x": 430,
-        "y": 1080,
+        "y": 1340,
         "wires": [
             [
                 "2e87f501b0a0f94b"
@@ -774,27 +750,13 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 120,
+        "x": 200,
         "y": 120,
         "wires": [
             [
                 "8f24af074f1a443c"
             ]
         ]
-    },
-    {
-        "id": "7bc55cf847260a66",
-        "type": "amqp out",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "",
-        "routingkey": "",
-        "iotype": "4",
-        "ioname": "wt.tracking.filterby.division",
-        "server": "70620c4aa929b5d8",
-        "x": 770,
-        "y": 240,
-        "wires": []
     },
     {
         "id": "ba50707f8350607b",
@@ -815,7 +777,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 120,
-        "y": 400,
+        "y": 660,
         "wires": [
             [
                 "61a97b32b17dbf53"
@@ -834,7 +796,7 @@
         "nack": true,
         "server": "8dad4b74fb298592",
         "x": 690,
-        "y": 480,
+        "y": 740,
         "wires": [
             []
         ]
@@ -853,7 +815,7 @@
         "finalize": "",
         "libs": [],
         "x": 660,
-        "y": 440,
+        "y": 700,
         "wires": [
             [
                 "583c321e926a7194"
@@ -872,7 +834,7 @@
         "nack": false,
         "server": "8dad4b74fb298592",
         "x": 690,
-        "y": 400,
+        "y": 660,
         "wires": [
             []
         ]
@@ -891,7 +853,7 @@
         "finalize": "",
         "libs": [],
         "x": 650,
-        "y": 360,
+        "y": 620,
         "wires": [
             [
                 "75ddc81655b011e5"
@@ -909,7 +871,7 @@
         "ioname": "wt.tracking.filterby.block",
         "server": "70620c4aa929b5d8",
         "x": 470,
-        "y": 520,
+        "y": 780,
         "wires": []
     },
     {
@@ -931,7 +893,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 220,
-        "y": 680,
+        "y": 940,
         "wires": [
             [
                 "b387dc3b8e3ba31b"
@@ -952,7 +914,7 @@
         "finalize": "",
         "libs": [],
         "x": 660,
-        "y": 740,
+        "y": 1000,
         "wires": [
             [
                 "f27b55e10b676cbc"
@@ -971,7 +933,7 @@
         "nack": true,
         "server": "7a8729d72f970b40",
         "x": 890,
-        "y": 740,
+        "y": 1000,
         "wires": [
             []
         ]
@@ -990,7 +952,7 @@
         "finalize": "",
         "libs": [],
         "x": 650,
-        "y": 660,
+        "y": 920,
         "wires": [
             [
                 "46f35e50e7239b03"
@@ -1009,7 +971,7 @@
         "nack": false,
         "server": "7a8729d72f970b40",
         "x": 870,
-        "y": 660,
+        "y": 920,
         "wires": [
             []
         ]
@@ -1025,7 +987,7 @@
         "ioname": "wt.tracking.filterby.tree",
         "server": "70620c4aa929b5d8",
         "x": 680,
-        "y": 700,
+        "y": 960,
         "wires": []
     },
     {
@@ -1047,7 +1009,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 200,
-        "y": 900,
+        "y": 1160,
         "wires": [
             [
                 "2da97027bd0d7c7a"
@@ -1073,7 +1035,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 160,
-        "y": 1080,
+        "y": 1340,
         "wires": [
             [
                 "909f0bae520fb673"
@@ -1094,7 +1056,7 @@
         "finalize": "",
         "libs": [],
         "x": 620,
-        "y": 1060,
+        "y": 1320,
         "wires": [
             [
                 "c88815bdc277d475"
@@ -1113,7 +1075,7 @@
         "nack": true,
         "server": "73a503547a572f1b",
         "x": 820,
-        "y": 1060,
+        "y": 1320,
         "wires": [
             []
         ]
@@ -1132,7 +1094,7 @@
         "finalize": "",
         "libs": [],
         "x": 610,
-        "y": 1100,
+        "y": 1360,
         "wires": [
             [
                 "7470e87bc569f9a8"
@@ -1151,7 +1113,7 @@
         "nack": false,
         "server": "73a503547a572f1b",
         "x": 800,
-        "y": 1100,
+        "y": 1360,
         "wires": [
             []
         ]
@@ -1175,14 +1137,14 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 520,
-        "y": 120,
+        "x": 480,
+        "y": 160,
         "wires": [
             [
-                "7ab4d9e9b22d944d"
+                "19bc5810b2b9aee7"
             ],
             [
-                "dfc98af8f801f8b3"
+                "a682597d72837a54"
             ]
         ]
     },
@@ -1191,61 +1153,16 @@
         "type": "amqp ack",
         "z": "06c72d44e5729b2a",
         "g": "9f1e98d4426d35e3",
-        "name": "",
+        "name": "Nack",
         "topic": "",
         "iotype": "4",
         "ioname": "wt.tracking.perdevice",
         "nack": true,
         "server": "0a8b482f55e0592d",
-        "x": 760,
-        "y": 200,
+        "x": 690,
+        "y": 240,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "dfc98af8f801f8b3",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "not acknowlege",
-        "func": "msg = msg.ori;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 740,
-        "y": 160,
-        "wires": [
-            [
-                "a682597d72837a54"
-            ]
-        ]
-    },
-    {
-        "id": "89a5b43359f7baa0",
-        "type": "switch",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "geoDivision",
-        "property": "geoDivision",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nnull"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 510,
-        "y": 200,
-        "wires": [
-            [
-                "e8c0683cc5f8df67"
-            ]
         ]
     },
     {
@@ -1259,30 +1176,11 @@
         "ioname": "wt.tracking.perdevice",
         "nack": false,
         "server": "0a8b482f55e0592d",
-        "x": 760,
+        "x": 740,
         "y": 120,
         "wires": [
-            []
-        ]
-    },
-    {
-        "id": "7ab4d9e9b22d944d",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "9f1e98d4426d35e3",
-        "name": "acknowlege",
-        "func": "msg = msg.ori;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 730,
-        "y": 80,
-        "wires": [
             [
-                "19bc5810b2b9aee7"
+                "036aac412f2ada03"
             ]
         ]
     },
@@ -1306,7 +1204,7 @@
         "repair": false,
         "outputs": 2,
         "x": 440,
-        "y": 400,
+        "y": 660,
         "wires": [
             [
                 "8294a49c8a909b6f"
@@ -1333,7 +1231,7 @@
         "repair": false,
         "outputs": 1,
         "x": 430,
-        "y": 480,
+        "y": 740,
         "wires": [
             [
                 "f837821d76ab526d"
@@ -1360,7 +1258,7 @@
         "repair": false,
         "outputs": 2,
         "x": 420,
-        "y": 900,
+        "y": 1160,
         "wires": [
             [
                 "5a370e3921d66ad8"
@@ -1384,7 +1282,7 @@
         "finalize": "",
         "libs": [],
         "x": 630,
-        "y": 880,
+        "y": 1140,
         "wires": [
             [
                 "6d5542a7141c4672"
@@ -1403,7 +1301,7 @@
         "nack": false,
         "server": "94497583e5725ee2",
         "x": 840,
-        "y": 880,
+        "y": 1140,
         "wires": [
             []
         ]
@@ -1422,7 +1320,7 @@
         "finalize": "",
         "libs": [],
         "x": 640,
-        "y": 920,
+        "y": 1180,
         "wires": [
             [
                 "32bb7db17bf0aae4"
@@ -1441,7 +1339,7 @@
         "nack": true,
         "server": "94497583e5725ee2",
         "x": 860,
-        "y": 920,
+        "y": 1180,
         "wires": [
             []
         ]
@@ -1466,7 +1364,7 @@
         "repair": false,
         "outputs": 2,
         "x": 440,
-        "y": 700,
+        "y": 960,
         "wires": [
             [
                 "556efb3bcd5fb373",
@@ -1476,6 +1374,64 @@
                 "3e8b4e6ffc5eb9a4"
             ]
         ]
+    },
+    {
+        "id": "036aac412f2ada03",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "foreach >> sending...",
+        "func": "try {\n    let { payload, geoDivisions } = msg;\n    if (Array.isArray(geoDivisions) && geoDivisions.length > 0) {\n        geoDivisions.forEach(geoDivision => {\n            node.send({ payload, geoDivision });\n        });\n    }\n} catch (err) {\n    node.error({ segment: 'tracking.perdevice', err });\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 160,
+        "wires": [
+            [
+                "7461788f7573e617"
+            ]
+        ],
+        "icon": "node-red-contrib-loop-processing/loop.png"
+    },
+    {
+        "id": "7461788f7573e617",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "worker: checkLocationsInMultiPloygon",
+        "func": "try {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n\n    let { payload, geoDivision } = msg;\n    let { date, series } = payload;\n    let [ident, longlat] = series;\n    worker.postMessage({\n        func: 'checkLocationsInMultiPloygon',\n        payload: {\n            locations: longlat,\n            multiPolygon: geoDivision\n        }\n    });\n    worker.on('message', (result) => {\n        worker.terminate();\n        let { area, tracking } = result.data;\n        if (Array.isArray(tracking) && tracking.length > 0) {\n            node.send({\n                payload: { date, ident, area, tracking }\n            });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        node.error({ segment: 'tracking.perdevice', err });\n    });\n} catch (err) {\n\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 200,
+        "wires": [
+            [
+                "7bc55cf847260a66"
+            ]
+        ],
+        "icon": "font-awesome/fa-qrcode"
+    },
+    {
+        "id": "7bc55cf847260a66",
+        "type": "amqp out",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "",
+        "routingkey": "",
+        "iotype": "4",
+        "ioname": "wt.tracking.filterby.division",
+        "server": "70620c4aa929b5d8",
+        "x": 1110,
+        "y": 200,
+        "wires": []
     },
     {
         "id": "7caf168b939b9028",
