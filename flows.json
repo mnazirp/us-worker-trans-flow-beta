@@ -16,14 +16,6 @@
         "env": []
     },
     {
-        "id": "2becf7ecab3a6f09",
-        "type": "tab",
-        "label": "vm: series",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "ef0e7b589320b81a",
         "type": "subflow",
         "name": "sub: couchdb-insert",
@@ -72,18 +64,18 @@
             "7caf168b939b9028",
             "bb6860a59623cd4b",
             "f449ebb8cc8d7088",
-            "e057ad1e131c55ee",
             "3fcc35deba3e1da9",
             "bafc0bcaf316df35",
-            "dce20e17ce373f6d",
-            "55430bbd67084deb",
-            "36bbf34f8f4ec2ac",
-            "bd7d3d7fe33f261b"
+            "020716827bd6f57c",
+            "c26a5a59558077e8",
+            "a367101b418a89b8",
+            "9596044b29bc782f",
+            "ec839a96c93d00fb"
         ],
         "x": 14,
-        "y": 339,
-        "w": 1072,
-        "h": 242
+        "y": 259,
+        "w": 892,
+        "h": 262
     },
     {
         "id": "9f1e98d4426d35e3",
@@ -106,7 +98,8 @@
             "19bc5810b2b9aee7",
             "036aac412f2ada03",
             "7461788f7573e617",
-            "7bc55cf847260a66"
+            "7bc55cf847260a66",
+            "46628c8f43849ad8"
         ],
         "x": 34,
         "y": 39,
@@ -128,15 +121,15 @@
         "nodes": [
             "e3a50e6cb96cc3b3",
             "dd42509446494f20",
-            "248c25e4d88ba52f",
-            "c7bc8f0da817a8a1",
-            "1035dda52d64f81f",
-            "d2ee66a5416bd52f"
+            "bcecd284253e3eb6",
+            "80f39477122f0d22",
+            "e9b2695be28f6292",
+            "c5e024b4ad9d61e7"
         ],
         "x": 14,
         "y": 79,
-        "w": 832,
-        "h": 202
+        "w": 892,
+        "h": 142
     },
     {
         "id": "bf7019fa94e27678",
@@ -155,17 +148,16 @@
             "61a97b32b17dbf53",
             "ba50707f8350607b",
             "583c321e926a7194",
-            "07e925cecf4e0f11",
             "75ddc81655b011e5",
-            "8294a49c8a909b6f",
             "f837821d76ab526d",
             "4a5542470e78ff1f",
-            "aaf76430a76d8abc"
+            "c7bb13b96f9452a1",
+            "142059263db366f7"
         ],
         "x": 34,
-        "y": 579,
-        "w": 792,
-        "h": 242
+        "y": 319,
+        "w": 1052,
+        "h": 162
     },
     {
         "id": "675a034d3ec876e6",
@@ -183,16 +175,15 @@
             "ba3d896fdaf8eaeb",
             "b387dc3b8e3ba31b",
             "62a7d89a51841542",
-            "3e8b4e6ffc5eb9a4",
             "f27b55e10b676cbc",
-            "556efb3bcd5fb373",
             "46f35e50e7239b03",
             "8ab2f8087937a815",
-            "bafc614fbcb82f02"
+            "bafc614fbcb82f02",
+            "74512cf78c05f502"
         ],
         "x": 34,
-        "y": 859,
-        "w": 992,
+        "y": 519,
+        "w": 952,
         "h": 182
     },
     {
@@ -212,14 +203,13 @@
             "2da97027bd0d7c7a",
             "9650f01883ca82d9",
             "084f166599dd9ab2",
-            "5a370e3921d66ad8",
             "6d5542a7141c4672",
-            "eb6b615b54e9fd61",
-            "32bb7db17bf0aae4"
+            "32bb7db17bf0aae4",
+            "aa46181f2e4cf02e"
         ],
         "x": 34,
-        "y": 1079,
-        "w": 952,
+        "y": 739,
+        "w": 1032,
         "h": 142
     },
     {
@@ -245,7 +235,7 @@
             "7470e87bc569f9a8"
         ],
         "x": 34,
-        "y": 1259,
+        "y": 919,
         "w": 892,
         "h": 142
     },
@@ -265,7 +255,7 @@
         "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
         "prefetch": true,
         "prefetchvalue": "1",
-        "prefetchack": true,
+        "prefetchack": false,
         "prefetchvalueack": "5000"
     },
     {
@@ -301,9 +291,9 @@
         "ca": "",
         "usetopology": false,
         "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
-        "prefetch": true,
+        "prefetch": false,
         "prefetchvalue": "1",
-        "prefetchack": true,
+        "prefetchack": false,
         "prefetchvalueack": "10000"
     },
     {
@@ -322,7 +312,7 @@
         "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
         "prefetch": true,
         "prefetchvalue": "1",
-        "prefetchack": true,
+        "prefetchack": false,
         "prefetchvalueack": "5000"
     },
     {
@@ -341,8 +331,8 @@
         "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
         "prefetch": true,
         "prefetchvalue": "1",
-        "prefetchack": false,
-        "prefetchvalueack": "20000"
+        "prefetchack": true,
+        "prefetchvalueack": "30000"
     },
     {
         "id": "8dad4b74fb298592",
@@ -360,8 +350,8 @@
         "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
         "prefetch": true,
         "prefetchvalue": "1",
-        "prefetchack": false,
-        "prefetchvalueack": "10"
+        "prefetchack": true,
+        "prefetchvalueack": "10000"
     },
     {
         "id": "f7b36a35cf0d6417",
@@ -397,7 +387,7 @@
         "usetopology": false,
         "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
         "prefetch": true,
-        "prefetchvalue": "5",
+        "prefetchvalue": "1",
         "prefetchack": false,
         "prefetchvalueack": "10"
     },
@@ -544,7 +534,6 @@
         "id": "d18b39342c8a59d3",
         "type": "amqp in",
         "z": "06c72d44e5729b2a",
-        "d": true,
         "g": "bf7019fa94e27678",
         "name": "",
         "topic": "",
@@ -552,7 +541,7 @@
         "ioname": "wt.tracking.filterby.division",
         "server": "8dad4b74fb298592",
         "x": 170,
-        "y": 620,
+        "y": 360,
         "wires": [
             [
                 "ba50707f8350607b"
@@ -564,20 +553,19 @@
         "type": "function",
         "z": "06c72d44e5729b2a",
         "g": "bf7019fa94e27678",
-        "name": "get block geojson >> foreach",
-        "func": "const couchdb = global.get('couchdb');\nlet ori = msg;\nlet { date, ident, area, tracking } = msg.payload;\nlet { psm, estate, division } = area;\n\ncouchdb.view('smart-geojson', 'block', 'geo-by-division', {\n    key: [psm, estate, division]\n}).then(res => {\n    res.data.rows.map(x => x.value).forEach(block => {\n        node.send({\n            payload: { date, ident, tracking, block }\n        });\n    });\n    node.send({ ack: true, ...ori }); /**acknowledge */\n}, (err) => {\n    node.error({ segment: 'filterby.division', err });\n    node.send({\n        error: err,\n        ack: false,\n        ori\n    })\n})\nreturn null;",
+        "name": "get block geojson",
+        "func": "const couchdb = global.get('couchdb');\nlet ori = msg;\nlet { area } = msg.payload;\nlet { psm, estate, division } = area;\n\ncouchdb.view('smart-geojson', 'block', 'geo-by-division', {\n    key: [psm, estate, division]\n}).then(res => {\n    let geoBlocks = res.data.rows.map(x => x.value);\n    node.send({ ack: true, geoBlocks, ...ori }); /**acknowledge */\n}, (err) => {\n    node.error({ segment: 'filterby.division', err });\n    node.send({\n        error: err,\n        ack: false,\n        ...ori\n    })\n})\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 180,
-        "y": 700,
+        "x": 430,
+        "y": 360,
         "wires": [
             [
-                "4a5542470e78ff1f",
-                "aaf76430a76d8abc"
+                "4a5542470e78ff1f"
             ]
         ],
         "icon": "font-awesome/fa-code-fork"
@@ -593,7 +581,7 @@
         "ioname": "wt.tracking.filterby.block",
         "server": "7a8729d72f970b40",
         "x": 170,
-        "y": 900,
+        "y": 560,
         "wires": [
             [
                 "62a7d89a51841542"
@@ -606,15 +594,15 @@
         "z": "06c72d44e5729b2a",
         "g": "675a034d3ec876e6",
         "name": "send to worker",
-        "func": "let ori = msg;\ntry {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking, block } = msg.payload;\n\n    // Send a message to the worker thread\n    worker.postMessage({\n        func: 'checkLocationsInPloygon',\n        payload: {\n            locations: tracking,\n            geojson: block\n        }\n    });\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        let { area, tracking } = result.data;\n        if (Array.isArray(tracking) && tracking.length > 0) {\n            node.send({\n                payload: {\n                    date,\n                    ident,\n                    area,\n                    tracking\n                },\n                ack: true,\n                ori\n            });\n        }\n    });\n\n    worker.on('error', (err) => {\n        worker.terminate();\n        node.error({ segment: 'filterby.block', err });\n        node.send({\n            error: err,\n            ack: false,\n            ori\n        })\n    });\n} catch (err) {\n    node.error({ segment: 'filterby.block', err });\n    node.send({\n        error: err,\n        ack: false,\n        ori\n    })\n}",
+        "func": "let ori = msg;\ntry {\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n    let { date, ident, tracking, block } = msg.payload;\n\n    // Send a message to the worker thread\n    worker.postMessage({\n        func: 'checkLocationsInPloygon',\n        payload: {\n            locations: tracking,\n            geojson: block\n        }\n    });\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        let { area, tracking } = result.data;\n        if (Array.isArray(tracking) && tracking.length > 0) {\n            ori.payload = {\n                date,\n                ident,\n                area,\n                tracking\n            }\n            node.send({ ack: true, ...ori }); /**acknowledge */\n        } else {\n            node.send({ ack: true, ...ori }); /**acknowledge */\n        }\n    });\n\n    worker.on('error', (err) => {\n        worker.terminate();\n        node.error({ segment: 'filterby.block', err });\n        node.send({\n            error: err,\n            ack: false,\n            ...ori\n        })\n    });\n} catch (err) {\n    node.error({ segment: 'filterby.block', err });\n    node.send({\n        error: err,\n        ack: false,\n        ...ori\n    })\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
-        "y": 920,
+        "x": 420,
+        "y": 580,
         "wires": [
             [
                 "bafc614fbcb82f02"
@@ -633,7 +621,7 @@
         "ioname": "wt.tracking.filterby.tree",
         "server": "94497583e5725ee2",
         "x": 160,
-        "y": 1120,
+        "y": 780,
         "wires": [
             [
                 "9650f01883ca82d9"
@@ -645,22 +633,22 @@
         "type": "function",
         "z": "06c72d44e5729b2a",
         "g": "8913e09cb6434789",
-        "name": "get tree geojson",
-        "func": "let ori = msg;\nlet payload = msg.payload;\ntry {\n    const couchdb = global.get('couchdb');\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n\n    let { date, ident, area, tracking } = payload;\n    let { psm, estate, division, block } = area;\n    couchdb.view('smart-geojson', 'tree', 'geo-by-block', {\n        key: [psm, estate, division, block]\n    }).then(res => {\n        let geoTree = res.data.rows?.map(x => x.value);\n        if (Array.isArray(geoTree) && geoTree.length > 0) {\n            worker.postMessage({\n                func: 'checkLocationsInPoints',\n                payload: {\n                    locations: tracking,\n                    points: geoTree,\n                    radius: 4,\n                    steps: 18\n                }\n            });\n        }\n    }, (err) => {\n        node.error({ segment: 'filterby.tree', err });\n        node.send({\n            error: err,\n            ack: false,\n            ori\n        })\n    });\n\n    worker.on('message', (res) => {\n        worker.terminate();\n        let inRange = res.data;\n        if (res.data && Array.isArray(inRange) && inRange.length > 0) {\n            let docs = inRange.map(x => {\n                return { date, ident, ...x }\n            })\n            couchdb.bulk('temp', docs)\n                .then(\n                    () => {\n                        node.send({ ack: true, ...ori }); /**acknowledge */\n                    }, err => {\n                        node.error({ segment: 'filterby.tree:bulk-insert', err });\n                        node.send({\n                            error: err,\n                            ack: false,\n                            ori\n                        });\n                    });\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        node.error({ segment: 'filterby.tree:worker-error', err });\n        node.send({\n            error: err,\n            ack: false,\n            ori\n        });\n    });\n} catch (err) {\n    node.error({ segment: 'filterby.tree', err });\n    node.send({\n        error: err,\n        ack: false,\n        ori\n    });\n}",
+        "name": "get tree geojson & send to worker",
+        "func": "let ori = msg;\nlet payload = msg.payload;\ntry {\n    const couchdb = global.get('couchdb');\n    let w = global.get('worker');\n    let worker = new w.Worker('./workers/w-geo.js');\n\n    let { date, ident, area, tracking } = payload;\n    let { psm, estate, division, block } = area;\n    couchdb.view('smart-geojson', 'tree', 'geo-by-block', {\n        key: [psm, estate, division, block]\n    }).then(res => {\n        let geoTrees = res.data.rows?.map(x => x.value);\n        if (Array.isArray(geoTrees) && geoTrees.length > 0) {\n            // worker.postMessage({\n            //     func: 'checkLocationsInPoints',\n            //     payload: {\n            //         locations: tracking,\n            //         points: geoTrees,\n            //         radius: 4,\n            //         steps: 18\n            //     }\n            // });\n            worker.postMessage({\n                func: 'distance',\n                payload: {\n                    locations: tracking,\n                    geojson: geoTrees,\n                    distance: 4\n                }\n            });\n        } else {\n            node.send({ ack: true, ...ori }); /**acknowledge */\n        }\n    }, (err) => {\n        node.error({ segment: 'filterby.tree', err });\n        node.send({\n            error: err,\n            ack: false,\n            ...ori\n        })\n    });\n    worker.on('message', (res) => {\n        worker.terminate();\n        // let inRange = res.data;\n        let { inRange } = res.data;\n        node.warn(res);\n        if (res.data && Array.isArray(inRange) && inRange.length > 0) {\n            let docs = inRange.map(x => {\n                return { date, ident, ...x }\n            })\n            couchdb.bulk('temp02', docs)\n                .then(() => {\n                    node.send({ ack: true, ...ori }); /**acknowledge */\n                }, err => {\n                    node.error({ segment: 'filterby.tree:bulk-insert', err });\n                    node.send({\n                        error: err,\n                        ack: false,\n                        ...ori\n                    });\n                });\n        } else {\n            node.send({ ack: true, ...ori }); /**acknowledge */\n        }\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        node.error({ segment: 'filterby.tree:worker-error', err });\n        node.send({\n            error: err,\n            ack: false,\n            ...ori\n        });\n    });\n} catch (err) {\n    node.error({ segment: 'filterby.tree', err });\n    node.send({\n        error: err,\n        ack: false,\n        ...ori\n    });\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 420,
-        "y": 1120,
+        "x": 480,
+        "y": 780,
         "wires": [
             [
                 "084f166599dd9ab2"
             ]
         ],
-        "icon": "font-awesome/fa-braille"
+        "icon": "node-red/join.svg"
     },
     {
         "id": "996035da1afdd16a",
@@ -674,7 +662,7 @@
         "ioname": "wt.transaction",
         "server": "73a503547a572f1b",
         "x": 140,
-        "y": 1300,
+        "y": 960,
         "wires": [
             [
                 "652a4d3ed7d3a711"
@@ -695,7 +683,7 @@
         "finalize": "",
         "libs": [],
         "x": 390,
-        "y": 1300,
+        "y": 960,
         "wires": [
             [
                 "d821f6f9cad4c1e3"
@@ -722,7 +710,7 @@
         "repair": false,
         "outputs": 2,
         "x": 430,
-        "y": 1340,
+        "y": 1000,
         "wires": [
             [
                 "2e87f501b0a0f94b"
@@ -776,8 +764,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 120,
-        "y": 660,
+        "x": 220,
+        "y": 400,
         "wires": [
             [
                 "61a97b32b17dbf53"
@@ -789,37 +777,16 @@
         "type": "amqp ack",
         "z": "06c72d44e5729b2a",
         "g": "bf7019fa94e27678",
-        "name": "",
+        "name": "Nack",
         "topic": "",
         "iotype": "4",
         "ioname": "wt.tracking.filterby.division",
         "nack": true,
         "server": "8dad4b74fb298592",
-        "x": 690,
-        "y": 740,
+        "x": 630,
+        "y": 440,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "07e925cecf4e0f11",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "bf7019fa94e27678",
-        "name": "not acknowlege",
-        "func": "msg = msg.ori;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 660,
-        "y": 700,
-        "wires": [
-            [
-                "583c321e926a7194"
-            ]
         ]
     },
     {
@@ -834,29 +801,10 @@
         "nack": false,
         "server": "8dad4b74fb298592",
         "x": 690,
-        "y": 660,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "8294a49c8a909b6f",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "bf7019fa94e27678",
-        "name": "acknowlege",
-        "func": "msg = msg.ori;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 650,
-        "y": 620,
+        "y": 360,
         "wires": [
             [
-                "75ddc81655b011e5"
+                "142059263db366f7"
             ]
         ]
     },
@@ -870,8 +818,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.filterby.block",
         "server": "70620c4aa929b5d8",
-        "x": 470,
-        "y": 780,
+        "x": 950,
+        "y": 400,
         "wires": []
     },
     {
@@ -881,7 +829,7 @@
         "g": "675a034d3ec876e6",
         "name": "",
         "pauseType": "delay",
-        "timeout": "3",
+        "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
         "nbRateUnits": "1",
@@ -893,31 +841,10 @@
         "allowrate": false,
         "outputs": 1,
         "x": 220,
-        "y": 940,
+        "y": 600,
         "wires": [
             [
                 "b387dc3b8e3ba31b"
-            ]
-        ]
-    },
-    {
-        "id": "3e8b4e6ffc5eb9a4",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "675a034d3ec876e6",
-        "name": "not acknowlege",
-        "func": "msg = msg.ori;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 660,
-        "y": 1000,
-        "wires": [
-            [
-                "f27b55e10b676cbc"
             ]
         ]
     },
@@ -926,37 +853,16 @@
         "type": "amqp ack",
         "z": "06c72d44e5729b2a",
         "g": "675a034d3ec876e6",
-        "name": "",
+        "name": "Nack",
         "topic": "",
         "iotype": "4",
         "ioname": "wt.tracking.filterby.block",
         "nack": true,
         "server": "7a8729d72f970b40",
-        "x": 890,
-        "y": 1000,
+        "x": 610,
+        "y": 660,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "556efb3bcd5fb373",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "675a034d3ec876e6",
-        "name": "acknowlege",
-        "func": "msg = msg.ori;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 650,
-        "y": 920,
-        "wires": [
-            [
-                "46f35e50e7239b03"
-            ]
         ]
     },
     {
@@ -970,10 +876,12 @@
         "ioname": "wt.tracking.filterby.block",
         "nack": false,
         "server": "7a8729d72f970b40",
-        "x": 870,
-        "y": 920,
+        "x": 670,
+        "y": 580,
         "wires": [
-            []
+            [
+                "74512cf78c05f502"
+            ]
         ]
     },
     {
@@ -986,8 +894,8 @@
         "iotype": "4",
         "ioname": "wt.tracking.filterby.tree",
         "server": "70620c4aa929b5d8",
-        "x": 680,
-        "y": 960,
+        "x": 660,
+        "y": 620,
         "wires": []
     },
     {
@@ -997,7 +905,7 @@
         "g": "8913e09cb6434789",
         "name": "",
         "pauseType": "delay",
-        "timeout": "1",
+        "timeout": "10",
         "timeoutUnits": "seconds",
         "rate": "1",
         "nbRateUnits": "1",
@@ -1009,7 +917,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 200,
-        "y": 1160,
+        "y": 820,
         "wires": [
             [
                 "2da97027bd0d7c7a"
@@ -1035,7 +943,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 160,
-        "y": 1340,
+        "y": 1000,
         "wires": [
             [
                 "909f0bae520fb673"
@@ -1056,7 +964,7 @@
         "finalize": "",
         "libs": [],
         "x": 620,
-        "y": 1320,
+        "y": 980,
         "wires": [
             [
                 "c88815bdc277d475"
@@ -1075,7 +983,7 @@
         "nack": true,
         "server": "73a503547a572f1b",
         "x": 820,
-        "y": 1320,
+        "y": 980,
         "wires": [
             []
         ]
@@ -1094,7 +1002,7 @@
         "finalize": "",
         "libs": [],
         "x": 610,
-        "y": 1360,
+        "y": 1020,
         "wires": [
             [
                 "7470e87bc569f9a8"
@@ -1113,7 +1021,7 @@
         "nack": false,
         "server": "73a503547a572f1b",
         "x": 800,
-        "y": 1360,
+        "y": 1020,
         "wires": [
             []
         ]
@@ -1141,7 +1049,8 @@
         "y": 160,
         "wires": [
             [
-                "19bc5810b2b9aee7"
+                "19bc5810b2b9aee7",
+                "036aac412f2ada03"
             ],
             [
                 "a682597d72837a54"
@@ -1180,7 +1089,7 @@
         "y": 120,
         "wires": [
             [
-                "036aac412f2ada03"
+                "46628c8f43849ad8"
             ]
         ]
     },
@@ -1204,37 +1113,14 @@
         "repair": false,
         "outputs": 2,
         "x": 440,
-        "y": 660,
+        "y": 400,
         "wires": [
             [
-                "8294a49c8a909b6f"
+                "75ddc81655b011e5",
+                "c7bb13b96f9452a1"
             ],
             [
-                "07e925cecf4e0f11"
-            ]
-        ]
-    },
-    {
-        "id": "aaf76430a76d8abc",
-        "type": "switch",
-        "z": "06c72d44e5729b2a",
-        "g": "bf7019fa94e27678",
-        "name": "ack is empty",
-        "property": "ack",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "empty"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 430,
-        "y": 740,
-        "wires": [
-            [
-                "f837821d76ab526d"
+                "583c321e926a7194"
             ]
         ]
     },
@@ -1257,35 +1143,14 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 420,
-        "y": 1160,
-        "wires": [
-            [
-                "5a370e3921d66ad8"
-            ],
-            [
-                "eb6b615b54e9fd61"
-            ]
-        ]
-    },
-    {
-        "id": "5a370e3921d66ad8",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "8913e09cb6434789",
-        "name": "acknowlege",
-        "func": "msg = msg.ori;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 630,
-        "y": 1140,
+        "x": 540,
+        "y": 820,
         "wires": [
             [
                 "6d5542a7141c4672"
+            ],
+            [
+                "32bb7db17bf0aae4"
             ]
         ]
     },
@@ -1300,30 +1165,11 @@
         "ioname": "wt.tracking.filterby.tree",
         "nack": false,
         "server": "94497583e5725ee2",
-        "x": 840,
-        "y": 1140,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "eb6b615b54e9fd61",
-        "type": "function",
-        "z": "06c72d44e5729b2a",
-        "g": "8913e09cb6434789",
-        "name": "not acknowlege",
-        "func": "msg = msg.ori;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 640,
-        "y": 1180,
+        "x": 760,
+        "y": 800,
         "wires": [
             [
-                "32bb7db17bf0aae4"
+                "aa46181f2e4cf02e"
             ]
         ]
     },
@@ -1338,8 +1184,8 @@
         "ioname": "wt.tracking.filterby.tree",
         "nack": true,
         "server": "94497583e5725ee2",
-        "x": 860,
-        "y": 1180,
+        "x": 760,
+        "y": 840,
         "wires": [
             []
         ]
@@ -1363,15 +1209,15 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 440,
-        "y": 960,
+        "x": 420,
+        "y": 620,
         "wires": [
             [
-                "556efb3bcd5fb373",
-                "8ab2f8087937a815"
+                "8ab2f8087937a815",
+                "46f35e50e7239b03"
             ],
             [
-                "3e8b4e6ffc5eb9a4"
+                "f27b55e10b676cbc"
             ]
         ]
     },
@@ -1434,6 +1280,100 @@
         "wires": []
     },
     {
+        "id": "c7bb13b96f9452a1",
+        "type": "function",
+        "z": "06c72d44e5729b2a",
+        "g": "bf7019fa94e27678",
+        "name": "foreach >> sending...",
+        "func": "try {\n    let { payload, geoBlocks } = msg;\n    if (Array.isArray(geoBlocks) && geoBlocks.length > 0) {\n        geoBlocks.forEach(block => {\n            node.send({\n                payload: { ...payload, block }\n            });\n        });\n    }\n} catch (err) {\n    node.error({ segment: 'tracking.perdevice', err });\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 400,
+        "wires": [
+            [
+                "f837821d76ab526d"
+            ]
+        ],
+        "icon": "node-red-contrib-loop-processing/loop.png"
+    },
+    {
+        "id": "46628c8f43849ad8",
+        "type": "debug",
+        "z": "06c72d44e5729b2a",
+        "g": "9f1e98d4426d35e3",
+        "name": "debug 10",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "142059263db366f7",
+        "type": "debug",
+        "z": "06c72d44e5729b2a",
+        "g": "bf7019fa94e27678",
+        "name": "debug 11",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "74512cf78c05f502",
+        "type": "debug",
+        "z": "06c72d44e5729b2a",
+        "g": "675a034d3ec876e6",
+        "name": "debug 12",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "aa46181f2e4cf02e",
+        "type": "debug",
+        "z": "06c72d44e5729b2a",
+        "g": "8913e09cb6434789",
+        "name": "debug 13",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 800,
+        "wires": []
+    },
+    {
         "id": "7caf168b939b9028",
         "type": "amqp in",
         "z": "9ba7388927fccc31",
@@ -1442,12 +1382,12 @@
         "topic": "",
         "iotype": "4",
         "ioname": "wt.smarttimeseries.to.redistimeseries",
-        "server": "e907ba5364e5896f",
+        "server": "56e870f2a20cabb0",
         "x": 190,
-        "y": 380,
+        "y": 300,
         "wires": [
             [
-                "bb6860a59623cd4b"
+                "020716827bd6f57c"
             ]
         ]
     },
@@ -1457,15 +1397,15 @@
         "z": "9ba7388927fccc31",
         "g": "89ff6cae3b742adc",
         "name": "chunk data",
-        "func": "let payload = msg.payload;\n\nconst chunkSize = 1000;\nconst delayBetweenChunks = 1000;\n\nfunction processArrayWithDelay(startIndex) {\n  const endIndex = Math.min(startIndex + chunkSize, payload.length);\n  const chunk = payload.slice(startIndex, endIndex);\n\n  node.send({\n    payload: chunk\n  });\n\n  if (endIndex < payload.length) {\n    setTimeout(() => {\n      processArrayWithDelay(endIndex);\n    }, delayBetweenChunks);\n  }\n}\n\n// Start processing the array with a delay\nprocessArrayWithDelay(0);\nreturn null;",
+        "func": "let ori = msg;\nlet payload = msg.payload;\nconst chunkSize = 1000;\nconst delayBetweenChunks = 100;\ntry {\n  processArrayWithDelay(0);\n} catch (err) {\n  node.warn(err);\n}\n\nfunction processArrayWithDelay(startIndex) {\n  const endIndex = Math.min(startIndex + chunkSize, payload.length);\n  const chunk = payload.slice(startIndex, endIndex);\n\n  node.send({\n    payload: chunk\n  });\n\n  if (endIndex < payload.length) {\n    setTimeout(() => {\n      processArrayWithDelay(endIndex);\n    }, delayBetweenChunks);\n  }\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 270,
-        "y": 420,
+        "x": 490,
+        "y": 300,
         "wires": [
             [
                 "bafc0bcaf316df35"
@@ -1479,44 +1419,21 @@
         "z": "9ba7388927fccc31",
         "g": "89ff6cae3b742adc",
         "name": "build create & add commands",
-        "func": "const redisTS = global.get('redisTS');\nlet ori = msg.payload;\n\nredisTS.commands([['keys', 'wt:*']]).then(rs => {\n    let wtKeys = rs.data[0];\n    let payload = msg.payload;\n    let suffix = ['deviceDatetime', 'latitude', 'longitude', 'altitude', 'speed', 'event', 'battery'];\n    let addCommands = [];\n    let createPayload = [];\n\n    for (const rec of payload) {\n        let { deviceID, deviceDatetime, latitude, longitude, altitude, event, speed, battery } = rec;\n        if (deviceDatetime && deviceDatetime != null && deviceDatetime != \"\") {\n            suffix.forEach(suf => {\n                if (!wtKeys.includes(`wt:${deviceID}:${suf}`) && createPayload.find(x => x.key == `wt:${deviceID}:${suf}`) == undefined) {\n                    createPayload.push({\n                        key: `wt:${deviceID}:${suf}`,\n                        retention: 0,\n                        duplicatePolicy: (suf != 'event') ? 'LAST' : 'SUM',\n                        labels: ['type', 'worker-tracker', 'deviceID', deviceID, 'topic', suf],\n                        encoding: 'UNCOMPRESSED'\n                    });\n                }\n            })\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:deviceDatetime`,\n                new Date(deviceDatetime).getTime().toString(),\n                new Date(deviceDatetime).getTime().toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:latitude`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(latitude).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:longitude`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(longitude).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:altitude`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(altitude).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:speed`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(speed).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:event`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(event).toString()\n            ]);\n            addCommands.push([\n                'TS.ADD',\n                `wt:${deviceID}:battery`,\n                new Date(deviceDatetime).getTime().toString(),\n                parseFloat(battery).toString()\n            ]);\n        }\n    }\n\n    redisTS.tsCreate(createPayload).then(createRS => {\n        msg.payload = addCommands;\n        node.send(msg);\n    }, (err) => {\n        node.send({\n            payload: ori,\n            error: err\n        })\n    });\n}, (err) => {\n    node.send({\n        payload: ori,\n        error: err\n    })\n});",
+        "func": "let ori = msg;\ntry {\n    const redisTS = global.get('redisTS');\n    const w = global.get('worker');\n    const worker = new w.Worker('./workers/w-redis-ts.js', { workerData: 'send data csv to timeseries' });\n\n    redisTS.commands([['keys', 'wt:*']]).then(rs => {\n        let wtKeys = rs.data[0];\n        let payload = msg.payload;\n        let suffix = ['deviceDatetime', 'latitude', 'longitude', 'altitude', 'speed', 'event', 'battery'];\n        let addCommands = [];\n        let createPayload = [];\n\n        for (const rec of payload) {\n            let { deviceID, deviceDatetime, latitude, longitude, altitude, event, speed, battery } = rec;\n            if (deviceDatetime && deviceDatetime != null && deviceDatetime != \"\") {\n                suffix.forEach(suf => {\n                    if (!wtKeys.includes(`wt:${deviceID}:${suf}`) && createPayload.find(x => x.key == `wt:${deviceID}:${suf}`) == undefined) {\n                        createPayload.push({\n                            key: `wt:${deviceID}:${suf}`,\n                            retention: 0,\n                            duplicatePolicy: (suf != 'event') ? 'LAST' : 'SUM',\n                            labels: ['type', 'worker-tracker', 'deviceID', deviceID, 'topic', suf],\n                            encoding: 'UNCOMPRESSED'\n                        });\n                    }\n                })\n                addCommands.push([\n                    'TS.ADD',\n                    `wt:${deviceID}:deviceDatetime`,\n                    new Date(deviceDatetime).getTime().toString(),\n                    new Date(deviceDatetime).getTime().toString()\n                ]);\n                addCommands.push([\n                    'TS.ADD',\n                    `wt:${deviceID}:latitude`,\n                    new Date(deviceDatetime).getTime().toString(),\n                    parseFloat(latitude).toString()\n                ]);\n                addCommands.push([\n                    'TS.ADD',\n                    `wt:${deviceID}:longitude`,\n                    new Date(deviceDatetime).getTime().toString(),\n                    parseFloat(longitude).toString()\n                ]);\n                addCommands.push([\n                    'TS.ADD',\n                    `wt:${deviceID}:altitude`,\n                    new Date(deviceDatetime).getTime().toString(),\n                    parseFloat(altitude).toString()\n                ]);\n                addCommands.push([\n                    'TS.ADD',\n                    `wt:${deviceID}:speed`,\n                    new Date(deviceDatetime).getTime().toString(),\n                    parseFloat(speed).toString()\n                ]);\n                addCommands.push([\n                    'TS.ADD',\n                    `wt:${deviceID}:event`,\n                    new Date(deviceDatetime).getTime().toString(),\n                    parseFloat(event).toString()\n                ]);\n                addCommands.push([\n                    'TS.ADD',\n                    `wt:${deviceID}:battery`,\n                    new Date(deviceDatetime).getTime().toString(),\n                    parseFloat(battery).toString()\n                ]);\n            }\n        }\n\n        redisTS.tsCreate(createPayload).then(createRS => {\n            // Send a message to the worker thread\n            worker.postMessage({\n                func: 'commands',\n                payload: addCommands\n            });\n        }, (err) => {\n            node.send({ error: err, ack: false, ...ori })\n        });\n    }, (err) => {\n        node.send({ error: err, ack: false, ...ori })\n    });\n\n    worker.on('message', (result) => {\n        worker.terminate();\n        ori.payload = result;\n        node.send({ ack: true, ...ori });\n    });\n    worker.on('error', (err) => {\n        worker.terminate();\n        node.send({ error: err, ack: false, ...ori })\n    })\n} catch (err) {\n    node.send({ error: err, ack: false, ...ori })\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 530,
-        "y": 500,
+        "x": 550,
+        "y": 420,
         "wires": [
             [
-                "e057ad1e131c55ee",
-                "dce20e17ce373f6d"
+                "a367101b418a89b8"
             ]
         ],
         "icon": "font-awesome/fa-code-fork"
-    },
-    {
-        "id": "e057ad1e131c55ee",
-        "type": "function",
-        "z": "9ba7388927fccc31",
-        "g": "89ff6cae3b742adc",
-        "name": "ts.add data series",
-        "func": "try {\n    if (msg.error == undefined) {\n        const w = global.get('worker');\n        const worker = new w.Worker('./workers/w-redis-ts.js', { workerData: 'send data csv to timeseries' });\n\n        worker.on('message', (result) => {\n            worker.terminate();\n            node.send({ payload: result });\n        });\n        worker.on('error', (err) => {\n            worker.terminate();\n            node.send({\n                payload: msg.payload,\n                error: err\n            })\n        })\n\n        // Send a message to the worker thread\n        worker.postMessage({\n            func: 'commands',\n            payload: msg.payload\n        });\n    }\n} catch (err) {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n}",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 570,
-        "y": 540,
-        "wires": [
-            [
-                "dce20e17ce373f6d"
-            ]
-        ],
-        "icon": "font-awesome/fa-qrcode"
     },
     {
         "id": "3fcc35deba3e1da9",
@@ -1527,12 +1444,12 @@
         "topic": "",
         "iotype": "4",
         "ioname": "wt.series.chunk",
-        "server": "56e870f2a20cabb0",
+        "server": "5471df75ac676292",
         "x": 260,
-        "y": 500,
+        "y": 420,
         "wires": [
             [
-                "f449ebb8cc8d7088"
+                "c26a5a59558077e8"
             ]
         ]
     },
@@ -1546,8 +1463,8 @@
         "iotype": "4",
         "ioname": "wt.series.chunk",
         "server": "f7b36a35cf0d6417",
-        "x": 480,
-        "y": 420,
+        "x": 500,
+        "y": 340,
         "wires": []
     },
     {
@@ -1559,12 +1476,12 @@
         "topic": "",
         "iotype": "4",
         "ioname": "wt.smartbucket.to.smarttimeseries",
-        "server": "5471df75ac676292",
+        "server": "e907ba5364e5896f",
         "x": 180,
         "y": 120,
         "wires": [
             [
-                "dd42509446494f20"
+                "bcecd284253e3eb6"
             ]
         ]
     },
@@ -1574,174 +1491,18 @@
         "z": "9ba7388927fccc31",
         "g": "48e7b095e8d92958",
         "name": "bulk insert",
-        "func": "const couchdb = global.get('couchdb');\n\ncouchdb.bulk('smart-timeseries', msg.payload)\n    .then(() => { }, (err) => {\n        node.send({\n            payload: msg.payload,\n            error: err\n        })\n    })\nreturn msg;",
+        "func": "let ori = msg;\ntry {\n    const couchdb = global.get('couchdb');\n\n    couchdb.bulk('smart-timeseries', msg.payload)\n        .then(() => {\n            node.send({ ack: true, ...ori });\n        }, (err) => {\n            node.send({\n                error: err,\n                ack: false,\n                ...ori\n            })\n        });\n} catch (err) {\n    node.send({\n        error: err,\n        ack: false,\n        ...ori\n    })\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 250,
-        "y": 160,
+        "x": 470,
+        "y": 120,
         "wires": [
             [
-                "248c25e4d88ba52f"
-            ]
-        ]
-    },
-    {
-        "id": "248c25e4d88ba52f",
-        "type": "switch",
-        "z": "9ba7388927fccc31",
-        "g": "48e7b095e8d92958",
-        "name": "error ? ",
-        "property": "error",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nnull"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 430,
-        "y": 160,
-        "wires": [
-            [
-                "c7bc8f0da817a8a1",
-                "d2ee66a5416bd52f"
-            ]
-        ]
-    },
-    {
-        "id": "c7bc8f0da817a8a1",
-        "type": "debug",
-        "z": "9ba7388927fccc31",
-        "g": "48e7b095e8d92958",
-        "name": "debug 4",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "error",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 600,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "1035dda52d64f81f",
-        "type": "amqp out",
-        "z": "9ba7388927fccc31",
-        "g": "48e7b095e8d92958",
-        "name": "",
-        "routingkey": "",
-        "iotype": "4",
-        "ioname": "wt.smartbucket.to.smarttimeseries",
-        "server": "f7b36a35cf0d6417",
-        "x": 680,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "d2ee66a5416bd52f",
-        "type": "function",
-        "z": "9ba7388927fccc31",
-        "g": "48e7b095e8d92958",
-        "name": "send back payload",
-        "func": "let {payload} = msg.payload;\nmsg.payload = payload;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 630,
-        "y": 200,
-        "wires": [
-            [
-                "1035dda52d64f81f"
-            ]
-        ]
-    },
-    {
-        "id": "dce20e17ce373f6d",
-        "type": "switch",
-        "z": "9ba7388927fccc31",
-        "g": "89ff6cae3b742adc",
-        "name": "error ? ",
-        "property": "error",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nnull"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 770,
-        "y": 500,
-        "wires": [
-            [
-                "55430bbd67084deb",
-                "bd7d3d7fe33f261b"
-            ]
-        ]
-    },
-    {
-        "id": "55430bbd67084deb",
-        "type": "debug",
-        "z": "9ba7388927fccc31",
-        "g": "89ff6cae3b742adc",
-        "name": "debug 9",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "error",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 940,
-        "y": 460,
-        "wires": []
-    },
-    {
-        "id": "36bbf34f8f4ec2ac",
-        "type": "amqp out",
-        "z": "9ba7388927fccc31",
-        "g": "89ff6cae3b742adc",
-        "name": "",
-        "routingkey": "",
-        "iotype": "4",
-        "ioname": "wt.series.chunk",
-        "server": "f7b36a35cf0d6417",
-        "x": 960,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "bd7d3d7fe33f261b",
-        "type": "function",
-        "z": "9ba7388927fccc31",
-        "g": "89ff6cae3b742adc",
-        "name": "send back payload",
-        "func": "let {payload} = msg.payload;\nmsg.payload = payload;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 970,
-        "y": 500,
-        "wires": [
-            [
-                "36bbf34f8f4ec2ac"
+                "80f39477122f0d22"
             ]
         ]
     },
@@ -1749,10 +1510,282 @@
         "id": "0337520c937b5a0c",
         "type": "comment",
         "z": "9ba7388927fccc31",
-        "name": "",
-        "info": "## wt.csv.import\n1 message / 5 seconds\n\n## wt.csv.import.chunk\n1 message / 10 seconds",
-        "x": 80,
+        "name": "How to manual Acknowledge",
+        "info": "## How to manual Acknowledge\nset source connection to be Prefetch = 1, without AckTimeout\nafter amqp-in set delay node and set timer\nmake sure to use amqp ack to Acknowledge,\neither success or failed the process",
+        "x": 140,
         "y": 40,
         "wires": []
+    },
+    {
+        "id": "bcecd284253e3eb6",
+        "type": "delay",
+        "z": "9ba7388927fccc31",
+        "g": "48e7b095e8d92958",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 260,
+        "y": 160,
+        "wires": [
+            [
+                "dd42509446494f20"
+            ]
+        ]
+    },
+    {
+        "id": "020716827bd6f57c",
+        "type": "delay",
+        "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 340,
+        "wires": [
+            [
+                "bb6860a59623cd4b"
+            ]
+        ]
+    },
+    {
+        "id": "c26a5a59558077e8",
+        "type": "delay",
+        "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 460,
+        "wires": [
+            [
+                "f449ebb8cc8d7088"
+            ]
+        ]
+    },
+    {
+        "id": "80f39477122f0d22",
+        "type": "switch",
+        "z": "9ba7388927fccc31",
+        "g": "48e7b095e8d92958",
+        "name": "acknowledge ?",
+        "property": "ack",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 480,
+        "y": 160,
+        "wires": [
+            [
+                "e9b2695be28f6292"
+            ],
+            [
+                "c5e024b4ad9d61e7"
+            ]
+        ]
+    },
+    {
+        "id": "e9b2695be28f6292",
+        "type": "amqp ack",
+        "z": "9ba7388927fccc31",
+        "g": "48e7b095e8d92958",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.smartbucket.to.smarttimeseries",
+        "nack": false,
+        "server": "e907ba5364e5896f",
+        "x": 740,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c5e024b4ad9d61e7",
+        "type": "amqp ack",
+        "z": "9ba7388927fccc31",
+        "g": "48e7b095e8d92958",
+        "name": "Nack",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.smartbucket.to.smarttimeseries",
+        "nack": true,
+        "server": "e907ba5364e5896f",
+        "x": 650,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8328e04150db13b5",
+        "type": "inject",
+        "z": "9ba7388927fccc31",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 680,
+        "wires": [
+            [
+                "a6ef5185b3ad713f"
+            ]
+        ]
+    },
+    {
+        "id": "a6ef5185b3ad713f",
+        "type": "function",
+        "z": "9ba7388927fccc31",
+        "name": "function 1",
+        "func": "const redisTS = global.get('redisTS');\n\nlet d = new Date()\n\nredisTS.commands([\n    ['TS.MRANGE', '1705338000000', '1705424399999', 'FILTER', 'deviceID=wt0040'],\n    ['TS.MRANGE', '1705424400000', '1705510799999', 'FILTER', 'deviceID=wt0040']\n]).then(res => {\n    node.warn(res);\n}, err => {\n    node.error(err)\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e057ad1e131c55ee",
+        "type": "function",
+        "z": "9ba7388927fccc31",
+        "name": "ts.add data series",
+        "func": "try {\n    if (msg.error == undefined) {\n        const w = global.get('worker');\n        const worker = new w.Worker('./workers/w-redis-ts.js', { workerData: 'send data csv to timeseries' });\n\n        worker.on('message', (result) => {\n            worker.terminate();\n            node.send({ payload: result });\n        });\n        worker.on('error', (err) => {\n            worker.terminate();\n            node.send({\n                payload: msg.payload,\n                error: err\n            })\n        })\n\n        // Send a message to the worker thread\n        worker.postMessage({\n            func: 'commands',\n            payload: msg.payload\n        });\n    }\n} catch (err) {\n    node.send({\n        payload: msg.payload,\n        error: err\n    })\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 640,
+        "wires": [
+            []
+        ],
+        "icon": "font-awesome/fa-qrcode"
+    },
+    {
+        "id": "a367101b418a89b8",
+        "type": "switch",
+        "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
+        "name": "acknowledge ?",
+        "property": "ack",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 600,
+        "y": 460,
+        "wires": [
+            [
+                "9596044b29bc782f"
+            ],
+            [
+                "ec839a96c93d00fb"
+            ]
+        ]
+    },
+    {
+        "id": "9596044b29bc782f",
+        "type": "amqp ack",
+        "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.series.chunk",
+        "nack": false,
+        "server": "5471df75ac676292",
+        "x": 800,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ec839a96c93d00fb",
+        "type": "amqp ack",
+        "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
+        "name": "Nack",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.series.chunk",
+        "nack": false,
+        "server": "5471df75ac676292",
+        "x": 770,
+        "y": 480,
+        "wires": [
+            []
+        ]
     }
 ]
