@@ -70,12 +70,16 @@
             "c26a5a59558077e8",
             "a367101b418a89b8",
             "9596044b29bc782f",
-            "ec839a96c93d00fb"
+            "ec839a96c93d00fb",
+            "5fb7794eeb655f6f",
+            "da3d7ea7970a63c5",
+            "3201d7f314d747f3",
+            "bbdf1a1e681bdd24"
         ],
         "x": 14,
         "y": 259,
-        "w": 892,
-        "h": 262
+        "w": 932,
+        "h": 302
     },
     {
         "id": "9f1e98d4426d35e3",
@@ -289,10 +293,10 @@
         "ca": "",
         "usetopology": false,
         "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}",
-        "prefetch": false,
+        "prefetch": true,
         "prefetchvalue": "1",
-        "prefetchack": false,
-        "prefetchvalueack": "10000"
+        "prefetchack": true,
+        "prefetchvalueack": "20000"
     },
     {
         "id": "5471df75ac676292",
@@ -1352,7 +1356,7 @@
         "z": "9ba7388927fccc31",
         "g": "89ff6cae3b742adc",
         "name": "chunk data",
-        "func": "let ori = msg;\nlet payload = msg.payload;\nconst chunkSize = 1000;\nconst delayBetweenChunks = 100;\ntry {\n  processArrayWithDelay(0);\n} catch (err) {\n  node.warn(err);\n}\n\nfunction processArrayWithDelay(startIndex) {\n  const endIndex = Math.min(startIndex + chunkSize, payload.length);\n  const chunk = payload.slice(startIndex, endIndex);\n\n  node.send({\n    payload: chunk\n  });\n\n  if (endIndex < payload.length) {\n    setTimeout(() => {\n      processArrayWithDelay(endIndex);\n    }, delayBetweenChunks);\n  }\n}",
+        "func": "let ori = msg;\nlet payload = msg.payload;\ntry {\n\n  /* Grouping the array by deviceDatetime */\n  const groupedData = payload.reduce((acc, obj) => {\n    const { deviceDatetime, ...rest } = obj;\n    acc[deviceDatetime] = acc[deviceDatetime] || [];\n    acc[deviceDatetime].push(rest);\n    return acc;\n  }, {});\n\n  // Converting the grouped data into an array of objects\n  const grouped = Object.keys(groupedData).map((key) => ({\n    deviceDatetime: key,\n    data: groupedData[key],\n  }));\n  let temp = grouped.map(x => {\n    let { deviceDatetime } = x;\n    let rs = [];\n    for (let i = 0; i < x.data.length; i++) {\n      let suffix = (i < 10) ? `00${i}` : `0${i}`;\n      let newD = deviceDatetime.substring(0, deviceDatetime.length - 3) + suffix;\n      rs.push({\n        deviceDatetime: newD,\n        ...x.data[i]\n      });\n    }\n    return rs;\n  });\n  let series = [].concat(...temp);\n  node.send({ ack: true, series, ...ori })\n} catch (err) {\n  node.send({ error: err, ack: false, ...ori })\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1363,7 +1367,7 @@
         "y": 300,
         "wires": [
             [
-                "bafc0bcaf316df35"
+                "5fb7794eeb655f6f"
             ]
         ],
         "icon": "node-red/status.svg"
@@ -1382,7 +1386,7 @@
         "finalize": "",
         "libs": [],
         "x": 550,
-        "y": 420,
+        "y": 460,
         "wires": [
             [
                 "a367101b418a89b8"
@@ -1401,7 +1405,7 @@
         "ioname": "wt.series.chunk",
         "server": "5471df75ac676292",
         "x": 260,
-        "y": 420,
+        "y": 460,
         "wires": [
             [
                 "c26a5a59558077e8"
@@ -1418,8 +1422,8 @@
         "iotype": "4",
         "ioname": "wt.series.chunk",
         "server": "f7b36a35cf0d6417",
-        "x": 500,
-        "y": 340,
+        "x": 840,
+        "y": 400,
         "wires": []
     },
     {
@@ -1504,7 +1508,7 @@
         "g": "89ff6cae3b742adc",
         "name": "",
         "pauseType": "delay",
-        "timeout": "10",
+        "timeout": "20",
         "timeoutUnits": "seconds",
         "rate": "1",
         "nbRateUnits": "1",
@@ -1542,7 +1546,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 280,
-        "y": 460,
+        "y": 500,
         "wires": [
             [
                 "f449ebb8cc8d7088"
@@ -1633,7 +1637,7 @@
         "repair": false,
         "outputs": 2,
         "x": 600,
-        "y": 460,
+        "y": 500,
         "wires": [
             [
                 "9596044b29bc782f"
@@ -1655,7 +1659,7 @@
         "nack": false,
         "server": "5471df75ac676292",
         "x": 800,
-        "y": 440,
+        "y": 480,
         "wires": [
             []
         ]
@@ -1672,9 +1676,96 @@
         "nack": false,
         "server": "5471df75ac676292",
         "x": 770,
-        "y": 480,
+        "y": 520,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "5fb7794eeb655f6f",
+        "type": "switch",
+        "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
+        "name": "acknowledge ?",
+        "property": "ack",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 500,
+        "y": 340,
+        "wires": [
+            [
+                "da3d7ea7970a63c5"
+            ],
+            [
+                "3201d7f314d747f3"
+            ]
+        ]
+    },
+    {
+        "id": "da3d7ea7970a63c5",
+        "type": "amqp ack",
+        "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.smarttimeseries.to.redistimeseries",
+        "nack": false,
+        "server": "56e870f2a20cabb0",
+        "x": 770,
+        "y": 320,
+        "wires": [
+            [
+                "bbdf1a1e681bdd24"
+            ]
+        ]
+    },
+    {
+        "id": "3201d7f314d747f3",
+        "type": "amqp ack",
+        "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
+        "name": "Nack",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "wt.smarttimeseries.to.redistimeseries",
+        "nack": true,
+        "server": "56e870f2a20cabb0",
+        "x": 670,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bbdf1a1e681bdd24",
+        "type": "function",
+        "z": "9ba7388927fccc31",
+        "g": "89ff6cae3b742adc",
+        "name": "chunk & delay",
+        "func": "let payload = msg.series;\nconst chunkSize = 1000;\nconst delayBetweenChunks = 100;\n/**execute chunk  */\nprocessArrayWithDelay(0);\n\nfunction processArrayWithDelay(startIndex) {\n  const endIndex = Math.min(startIndex + chunkSize, payload.length);\n  const chunk = payload.slice(startIndex, endIndex);\n\n  node.send({\n    payload: chunk\n  });\n\n  if (endIndex < payload.length) {\n    setTimeout(() => {\n      processArrayWithDelay(endIndex);\n    }, delayBetweenChunks);\n  }\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 360,
+        "wires": [
+            [
+                "bafc0bcaf316df35"
+            ]
         ]
     }
 ]
